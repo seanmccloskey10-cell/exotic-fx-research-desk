@@ -1,10 +1,10 @@
-# HANDOFF-PROMPT.md — Paste this into Claude Code on Bura's machine
+# HANDOFF-PROMPT.md — Paste this into Claude Code
 
-This is the prompt Bura pastes into Claude Code on his Mac mini to get the dashboard installed and running. Copy everything between the lines below and paste it in one shot.
+Copy everything between the lines below and paste it in one shot to your AI agent in VS Code (Claude Code). The agent will install and configure the dashboard for you.
 
 The prompt instructs the agent to:
 - **Enter plan mode FIRST** — propose what it'll do before running anything
-- **Recognize the OS handoff** — this tool was built and tested on Sean's Windows machine; Bura is on a Mac, so the agent must adapt commands accordingly
+- **Recognize the OS handoff** — this tool was built and tested on a Windows machine; the user is on a Mac, so the agent must adapt commands accordingly
 - **Pre-warn about macOS permission popups** — no surprise dialogs mid-execution
 - **Use Apple's GUI password dialog, NEVER terminal sudo** — same security, much better UX
 - **Read README.md and CLAUDE.md** before running anything
@@ -18,12 +18,11 @@ The prompt instructs the agent to:
 ---
 
 ```
-Hi — I'm Bura. I run a 7-person FX prop-desk based in Georgia, and I have
-Bloomberg at the desk. Sean (my AI tutor) built me a small FX research
-dashboard he wants me to install on my Mac mini at home. I'm AI-fluent
-(heavy Cowork user), but I'm not a developer — I won't type commands or
-debug stack traces. You handle setup, config, and any code-level
-adjustments via natural-language requests from me.
+Someone built me a small FX research dashboard they want me to install
+on my Mac. I work in FX research and I'm AI-fluent (heavy Cowork user),
+but I'm not a developer — I won't type commands, edit code, or debug
+stack traces. You handle setup, config, and any code-level adjustments
+via natural-language requests from me.
 
 I want you to clone and set up this tool for me:
 
@@ -36,13 +35,13 @@ API key — separate from my Claude plan, billed per-token, hard monthly
 cap).
 
 OS HANDOFF — IMPORTANT
-This tool was built and dry-run tested by Sean on Windows 11. I'm on
-macOS (Mac mini). The repo's README has both macOS and Windows install
-paths, but assume some commands or examples in the code may carry
-Windows assumptions. Catch them as you go and adjust silently — don't
-ask me what to do about a `.streamlit.pid` file or whether to use
-`python` vs `python3`. The tool's `run.py` wrapper is cross-platform;
-just use `python3` on my machine consistently.
+This tool was built and dry-run tested on Windows 11. I'm on macOS.
+The repo's README has both macOS and Windows install paths, but assume
+some commands or examples in the code may carry Windows assumptions.
+Catch them as you go and adjust silently — don't ask me what to do
+about a `.streamlit.pid` file or whether to use `python` vs `python3`.
+The tool's `run.py` wrapper is cross-platform; just use `python3` on
+my machine consistently.
 
 Permissions — just a one-time ack from me per install. You'll need
 some or all of these depending on what's already on my machine:
@@ -108,7 +107,7 @@ Please follow this flow:
 
 9. Stop when the dashboard is running and the watchlist shows live FX
    rates. DO NOT volunteer to set up the optional Anthropic API key
-   for AI Briefings — Sean and I will handle that together in our next
+   for AI Briefings — we'll handle that together in our next
    lesson.
 
 WHAT "DONE" LOOKS LIKE — tell me ONLY when you've verified ALL of these:
@@ -129,12 +128,12 @@ If any of those aren't right, don't say "it's working" — stop and tell me
 exactly what's off.
 
 A FEW THINGS ABOUT THIS REPO YOU SHOULD KNOW
-This repo is a fork of Sean's `equity-research-desk` (built originally
-for another student, Roula, in equities). The architecture, run.py flow,
-and tab structure are identical. Sean swapped:
+This repo is a fork of an `equity-research-desk` template (built
+originally for equities). The architecture, run.py flow, and tab
+structure are identical. The fork swapped:
 - The watchlist (stocks → FX pairs)
 - The briefing prompt (equity register → macro/FX register)
-- The audience copy throughout (Roula → Bura)
+- The audience copy throughout (Roula → the user)
 
 If you spot residual Roula-isms or stock-specific examples in the docs
 or code that the swap missed (especially in PROMPTS.md, HELP.md, or
@@ -143,9 +142,9 @@ Don't fix them silently — I want to know what's drifted.
 
 Also: there's a known cosmetic gap. The market-session indicator in the
 sidebar shows "NYSE" hours, but FX trades 24/5 with London/NY/Tokyo
-handoffs. Sean intentionally deferred fixing this until I use the tool
-for a week and decide whether session-aware FX context matters. Don't
-"fix" it without my approval.
+handoffs. The builder intentionally deferred fixing this until I use
+the tool for a week and decide whether session-aware FX context matters.
+Don't "fix" it without my approval.
 
 If you hit anything unexpected during setup — network failure, a
 dependency install error, a permissions dialog you don't understand,
@@ -178,7 +177,7 @@ Six lessons baked in from Sean's prior teaching incidents:
 2. **Permissions ack'd up front.** Surprise OS dialogs mid-execution are friction. Pre-warn, then go.
 3. **GUI password dialog, never terminal sudo.** Captured from the same Roula L4 — typing a password into a black box was visibly uncomfortable; Apple's lock-icon dialog felt safe. Same security, different trust feel.
 4. **Read README + CLAUDE.md before running.** Without this rule, agents skip context and miss invariants. The Settings-tab-read-only + Anthropic-only-in-views/briefing.py rules in CLAUDE.md are load-bearing safety properties; setting up without reading them risks regression.
-5. **"What done looks like" with concrete checks.** Prevents the agent from gaslighting Bura that a broken setup is fine.
+5. **"What done looks like" with concrete checks.** Prevents the agent from gaslighting the user that a broken setup is fine.
 6. **Don't fix what isn't broken without approval.** The known NYSE-hours gap is intentional — let the user own the timing of fixing it.
 
 ## Cross-references

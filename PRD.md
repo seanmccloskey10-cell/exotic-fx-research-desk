@@ -1,12 +1,12 @@
 # FX Research Desk — PRD
 
-> **⚠ This PRD is INHERITED VERBATIM from the parent `equity-research-desk` repo.** It documents how the codebase was originally designed and shipped for Roula. The FX variant (this repo) reuses the same architecture, the same `run.py` flow, the same Streamlit shape — only the watchlist, briefing register, and audience differ. **Do NOT rewrite this PRD wholesale.** When you ship NEW work for the FX variant, prepend a "FX Variant Deltas" section above with the specific differences (e.g. "tickers swapped to FX pairs", "briefing prompt rewritten for macro register", "Bura is AI-fluent — less hand-holding than Roula"). The original PRD body below is reference, not a current spec.
+> **⚠ This PRD is INHERITED VERBATIM from the parent `equity-research-desk` repo.** It documents how the codebase was originally designed and shipped for Roula. The FX variant (this repo) reuses the same architecture, the same `run.py` flow, the same Streamlit shape — only the watchlist, briefing register, and audience differ. **Do NOT rewrite this PRD wholesale.** When you ship NEW work for the FX variant, prepend a "FX Variant Deltas" section above with the specific differences (e.g. "tickers swapped to FX pairs", "briefing prompt rewritten for macro register", "the user is AI-fluent — less hand-holding than Roula"). The original PRD body below is reference, not a current spec.
 >
 > **Key FX-variant deltas as of 2026-04-26:**
 > - Watchlist swapped to G10 + EM + exotic FX pairs (see [config/tickers.yaml](config/tickers.yaml))
 > - Briefing prompt rewritten in macro/FX register (see [config/briefing_prompt.md](config/briefing_prompt.md)) — drops equity-specific fields (P/E, market cap, EPS, etc.) which yfinance returns null for FX
-> - Audience: Bura (senior FX prop-desk operator, AI-fluent) — less hand-holding than Roula needed
-> - "Crypto avoidance" rule from Roula's version dropped (not relevant to Bura)
+> - Audience: the user (senior FX prop-desk operator, AI-fluent) — less hand-holding than Roula needed
+> - "Crypto avoidance" rule from Roula's version dropped (not relevant to the user)
 > - Market-hours indicator still NYSE-derived (cosmetic gap; FX is 24/5 — see SESSION-NOTES.md for the deferred fix)
 
 ---

@@ -1,4 +1,4 @@
-"""Streamlit entry point — Bura's FX Research Desk.
+"""Streamlit entry point — FX Research Desk.
 
 Launch:
     streamlit run app.py
@@ -26,7 +26,7 @@ from views import analysis, briefing, overview, patterns, settings as settings_v
 
 
 st.set_page_config(
-    page_title="Bura's FX Research Desk",
+    page_title="FX Research Desk",
     page_icon="📊",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -46,7 +46,7 @@ def _settings() -> Settings:
 
 
 def _sidebar(settings: Settings, orch: DataOrchestrator) -> None:
-    st.sidebar.title("Bura's FX Research Desk")
+    st.sidebar.title("FX Research Desk")
     st.sidebar.caption("Local-first. Your data, your machine.")
 
     # Track the last refresh timestamp across reruns so Roula can see data

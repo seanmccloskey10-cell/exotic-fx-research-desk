@@ -1,6 +1,6 @@
 # CLAUDE.md — in-project agent guide
 
-**You are Claude Code running in Bura's cloned copy of this repo.** This file teaches you how the codebase is organized, what the non-negotiable rules are, and how to extend the tool safely. Read [PRD.md](PRD.md) for full product context, then come back here.
+**You are Claude Code running in the user's cloned copy of this repo.** This file teaches you how the codebase is organized, what the non-negotiable rules are, and how to extend the tool safely. Read [PRD.md](PRD.md) for full product context, then come back here.
 
 **Session-start reading order:** this file → [SESSION-NOTES.md](SESSION-NOTES.md) (recent changes, unusual state, open threads) → [PRD.md](PRD.md) if you need the full spec.
 
@@ -8,7 +8,7 @@
 
 ## What this project is
 
-A local-first FX research dashboard. Python + Streamlit + Plotly. Runs on Bura's machine, displays live FX data for his watchlist (default seed: EURUSD, USDTRY, USDZAR, USDBRL, USDMXN, USDIDR, USDPHP, USDVND — see [config/tickers.yaml](config/tickers.yaml)). yfinance is the primary data source — **the tool works with zero API keys.**
+A local-first FX research dashboard. Python + Streamlit + Plotly. Runs on the user's machine, displays live FX data for his watchlist (default seed: EURUSD, USDTRY, USDZAR, USDBRL, USDMXN, USDIDR, USDPHP, USDVND — see [config/tickers.yaml](config/tickers.yaml)). yfinance is the primary data source — **the tool works with zero API keys.**
 
 This repo is forked from `equity-research-desk` (the Roula tool, 2026-04-24), so most of the build history below references equities — that's the inheritance, not a confusion. The data layer, the briefing register, and the watchlist defaults are FX-shaped now; the architecture is the same.
 
@@ -16,11 +16,11 @@ This repo is forked from `equity-research-desk` (the Roula tool, 2026-04-24), so
 
 ## Who the user is
 
-**Bura.** Senior FX prop-desk operator. Runs a 7-person trading desk based in Georgia. **Already AI-fluent and a heavy Claude Cowork user** — comfortable with VS Code + Claude Code as a result of his L1 lesson with Sean. He does not need step-by-step hand-holding the way Roula did, but he's still not a developer — he wants you to handle setup, config, and any code-level changes via natural-language requests.
+The user is an **FX research professional** — AI-fluent (heavy Claude Cowork user), comfortable with VS Code + Claude Code, but **not a developer**. They want you to handle setup, config, and any code-level changes via natural-language requests.
 
-He has **Bloomberg** at the desk. This tool is the *synthesis layer over* the data he already has, not a replacement for it. Don't try to compete with Bloomberg on data; lean into what Bloomberg doesn't do — narrative tracking, plain-language briefings, cross-pair theme synthesis.
+They have **Bloomberg** (or comparable real-time market data). This tool is the *synthesis layer over* the data they already have, not a replacement for it. Don't try to compete with Bloomberg on data; lean into what Bloomberg doesn't do — narrative tracking, plain-language briefings, cross-pair theme synthesis.
 
-He is on **macOS (Mac mini at home)** — see the macOS gotchas section below.
+They are on **macOS** — see the macOS gotchas section below.
 
 ---
 
@@ -38,13 +38,13 @@ These are load-bearing. Breaking them undoes safety properties Sean explicitly d
 
 5. **Project is self-contained.** Do not read from or write to personal directories on the host machine from inside the app. Any data the app needs lives under the project root.
 
-6. **macOS install path: GUI-first for non-technical users (Bura).** When installing prerequisites on Bura's machine (Python, Git, etc.), prefer install methods that trigger Apple's GUI password dialog (the `.pkg` installer, drag-to-Applications, signed App Store installs) over Terminal-based `sudo` / `curl | bash` scripts. **Reason captured from a prior student's L4 lesson (2026-04-24):** typing a password into a black Terminal window was uncomfortable; the GUI lock-icon dialog was fine. Same security, very different trust feel. See README "Step 0 — Pre-flight" and "Step 1" for the recommended GUI-first sequence. **Pre-warn her about expected permission popups before triggering installs** — the popup avalanche during her L4 setup slowed progress because each dialog was a context switch + an unprepared decision. Walking her through what to expect up front collapsed that friction.
+6. **macOS install path: GUI-first for non-technical users (the user).** When installing prerequisites on the user's machine (Python, Git, etc.), prefer install methods that trigger Apple's GUI password dialog (the `.pkg` installer, drag-to-Applications, signed App Store installs) over Terminal-based `sudo` / `curl | bash` scripts. **Reason captured from a prior student's L4 lesson (2026-04-24):** typing a password into a black Terminal window was uncomfortable; the GUI lock-icon dialog was fine. Same security, very different trust feel. See README "Step 0 — Pre-flight" and "Step 1" for the recommended GUI-first sequence. **Pre-warn her about expected permission popups before triggering installs** — the popup avalanche during her L4 setup slowed progress because each dialog was a context switch + an unprepared decision. Walking her through what to expect up front collapsed that friction.
 
 ---
 
 ## The `run.py` wrapper
 
-Everything Python-related in this project goes through `python run.py <cmd>`. It handles venv creation, dependency install, and cross-platform path issues so Bura's experience is one consistent command regardless of OS state.
+Everything Python-related in this project goes through `python run.py <cmd>`. It handles venv creation, dependency install, and cross-platform path issues so the user's experience is one consistent command regardless of OS state.
 
 | Command | What it does |
 |---|---|
@@ -56,7 +56,7 @@ Everything Python-related in this project goes through `python run.py <cmd>`. It
 
 **On Windows**, swap `python3` for `python` (or `py`). Everything else is identical.
 
-**Do not tell Bura to run `pip install`, `python -m venv`, or `streamlit run`.** Those are `run.py`'s job. If you need a new package, add it to `requirements.txt` and tell her to run `python3 run.py setup` — the deps marker will trigger a reinstall.
+**Do not tell the user to run `pip install`, `python -m venv`, or `streamlit run`.** Those are `run.py`'s job. If you need a new package, add it to `requirements.txt` and tell her to run `python3 run.py setup` — the deps marker will trigger a reinstall.
 
 If Python 3.11+ or Git is missing from her machine, see the **Bootstrap** section in [README.md](README.md) — macOS uses `brew install python@3.11` / Xcode command-line tools; Windows uses `winget install`.
 
@@ -145,7 +145,7 @@ Edit [config/tickers.yaml](config/tickers.yaml). Append under `tickers:`:
     note: Polish zloty — EM CEE, ECB-correlated
 ```
 
-yfinance FX symbol convention is `<BASE><QUOTE>=X`. Cross pairs (no USD leg) work too: `EURJPY=X`, `GBPCHF=X`, etc. Tell Bura to hit the Refresh button in the sidebar. No code change required.
+yfinance FX symbol convention is `<BASE><QUOTE>=X`. Cross pairs (no USD leg) work too: `EURJPY=X`, `GBPCHF=X`, etc. Tell the user to hit the Refresh button in the sidebar. No code change required.
 
 ### Add a new data source
 
@@ -187,7 +187,7 @@ Edit [config/theme.py](config/theme.py) and [.streamlit/config.toml](.streamlit/
 
 ## When to ask the user first
 
-Before any of these, confirm with Bura:
+Before any of these, confirm with the user:
 
 - Changing the default theme or the sidebar layout
 - Raising `ANTHROPIC_MONTHLY_BUDGET_USD` — explain the tradeoff first
@@ -206,17 +206,17 @@ Before any of these, confirm with Bura:
 - Do not hardcode API keys in source files
 - Do not commit `.env`, `briefings/*.md`, or `.streamlit.pid`
 - Do not add browser-fetched data or client-side JavaScript (CORS was the previous build's failure mode — PRD §12.2)
-- Do not surface buy/sell/hold language anywhere — Bura runs his own desk, the tool is analysis not advice
+- Do not surface buy/sell/hold language anywhere — the user runs his own desk, the tool is analysis not advice
 
 ---
 
-## macOS gotchas (Bura's machine)
+## macOS gotchas (the user's machine)
 
 - **Use `python3`, not `python`.** macOS's default `python` is either absent or points to an old Apple-supplied Python (often 3.9). All launch commands in this repo use `python3`. The venv, once created, is fine — `run.py` routes everything through `.venv/bin/python` internally.
-- **TextEdit saves rich text by default.** Never ask Bura to open `.env` in TextEdit — it'll save as `.rtf`. Edit `.env` via your own file tools; if you absolutely need a GUI editor, use VS Code (`code .env`) or `nano` in Terminal.
+- **TextEdit saves rich text by default.** Never ask the user to open `.env` in TextEdit — it'll save as `.rtf`. Edit `.env` via your own file tools; if you absolutely need a GUI editor, use VS Code (`code .env`) or `nano` in Terminal.
 - **Finder hides extensions by default.** A file that looks like `.env` in Finder might be `.env.rtf` on disk. Always verify with `ls -la` in Terminal.
 - **Xcode command-line tools.** macOS prompts to install these on first `git` use — ~5 min download. Homebrew also triggers this install. Accept it; Git + most dev tools depend on it.
-- **Homebrew is the assumed package manager.** If Bura doesn't have it, offer to install it one-time. Without Homebrew, Python install falls back to the python.org .pkg installer.
+- **Homebrew is the assumed package manager.** If the user doesn't have it, offer to install it one-time. Without Homebrew, Python install falls back to the python.org .pkg installer.
 - **`.DS_Store` files.** Auto-created by Finder, already gitignored — ignore.
 
 ## Windows notes (for Sean testing, or a future Windows student)
@@ -234,10 +234,10 @@ The app is cross-platform by design (see `os.name` branches in [run.py](run.py) 
 VS Code's Python extension auto-injects `.env` variables into every integrated terminal session when `python.terminal.useEnvFile` is on. We turn this OFF deliberately. Reasons:
 
 1. **Consistency.** Enabling injection would make the app behave one way in the VS Code terminal and a different way in plain PowerShell. For a non-technical user, that's a debugging trap.
-2. **Secret scoping.** Injection would expose `ANTHROPIC_API_KEY` (and any other secret) to every shell command Bura runs. We want secrets scoped to the Python process that actually needs them.
+2. **Secret scoping.** Injection would expose `ANTHROPIC_API_KEY` (and any other secret) to every shell command the user runs. We want secrets scoped to the Python process that actually needs them.
 3. **We already handle `.env` in Python.** [config/settings.py](config/settings.py) calls `load_dotenv()` at import time — that's the single source of truth.
 
-Side benefit: VS Code no longer shows the "environment file is configured but terminal environment injection is disabled" notification to Bura on first open.
+Side benefit: VS Code no longer shows the "environment file is configured but terminal environment injection is disabled" notification to the user on first open.
 
 ---
 
@@ -245,22 +245,22 @@ Side benefit: VS Code no longer shows the "environment file is configured but te
 
 [APIS.md](APIS.md) was written for the equity-desk variant — most entries (Financial Modeling Prep, Quartr earnings transcripts, etc.) don't apply to FX. Skim it for the patterns, ignore the equity-specific recommendations.
 
-For Bura's FX desk, the data sources actually worth evaluating later are:
+For the user's FX desk, the data sources actually worth evaluating later are:
 
 1. **FRED** (St. Louis Fed) — unlimited free macro data: real rates, CPI, policy rates, balance-of-payments. Highest-leverage non-Bloomberg add. The `fredapi` Python package is straightforward to wire as a `data_sources/fred_source.py` following the existing `DataSource` pattern.
 2. **Trading Economics** — economic calendar (CB meetings, key data prints). Paid tier required for API; free web-scrape works for headline calendar.
-3. **Reuters Connect** — FX news API. Costs real money; only relevant if Bura wants automated news ingest beyond the yfinance news feed.
+3. **Reuters Connect** — FX news API. Costs real money; only relevant if the user wants automated news ingest beyond the yfinance news feed.
 4. **OECD / IMF data portals** — public REST APIs for macro indicators. Free, slow-moving data; useful for theme briefings.
 
-The non-API honest flag: Bura already has **Bloomberg**. If a feature he wants is "things Bloomberg already does well," tell him so — don't build a worse version of the Bloomberg surface. The whole point of this tool is the synthesis layer Bloomberg doesn't provide.
+The non-API honest flag: the user already has **Bloomberg**. If a feature he wants is "things Bloomberg already does well," tell him so — don't build a worse version of the Bloomberg surface. The whole point of this tool is the synthesis layer Bloomberg doesn't provide.
 
-When Bura asks to add a new API, follow the "Add a new data source" pattern above. The base abstraction (`data_sources/base.py`) is data-shape-agnostic — it'll handle FX-specific shapes without modification.
+When the user asks to add a new API, follow the "Add a new data source" pattern above. The base abstraction (`data_sources/base.py`) is data-shape-agnostic — it'll handle FX-specific shapes without modification.
 
 ---
 
 ## Phase status (inherited from equity-research-desk — keep this synced with reality)
 
-**This phase history is from the equity-research-desk parent repo, preserved verbatim because it documents how the codebase actually got built.** When you ship NEW work for the FX variant, prepend a "Phase 11+ (FX variant)" section above the equity history rather than editing the inherited entries. The architecture is the same; only the domain (FX vs equities), audience (Bura vs Roula), and data semantics changed.
+**This phase history is from the equity-research-desk parent repo, preserved verbatim because it documents how the codebase actually got built.** When you ship NEW work for the FX variant, prepend a "Phase 11+ (FX variant)" section above the equity history rather than editing the inherited entries. The architecture is the same; only the domain (FX vs equities), audience (the user vs Roula), and data semantics changed.
 
 
 
@@ -293,7 +293,7 @@ When Bura asks to add a new API, follow the "Add a new data source" pattern abov
   - Every phase's code is cross-referenced here in CLAUDE.md
 - **Phase 6** — fresh-clone smoke test on a separate Windows folder: pending
 - **Phase 10** — Full visual redesign + KaTeX bug fix + AI Brief per-section renderer + rename: ✅ shipped (2026-04-22)
-  - **Rename**: tool is now "Bura's Equity Research Desk" — page title ([app.py](app.py) `st.set_page_config`), sidebar title, and module docstring. Project-level docs (README, PRD) intentionally left unchanged (builder-side)
+  - **Rename**: tool is now "the user's Equity Research Desk" — page title ([app.py](app.py) `st.set_page_config`), sidebar title, and module docstring. Project-level docs (README, PRD) intentionally left unchanged (builder-side)
   - **New theme primitives** in [config/theme.py](config/theme.py):
     - `page_header(title, subtitle)` — tab-level heading with accent underline rule
     - `section_label(text, icon=None, tone="accent")` — small-caps label, optional icon chip, tone keyword (`accent` / `gain` / `loss` / `warn` / `cool` / `purple` / `muted`) colors the left tick + icon tint + heading text
@@ -313,7 +313,7 @@ When Bura asks to add a new API, follow the "Add a new data source" pattern abov
   - [views/analysis.py](views/analysis.py) — hero strip at top (ticker+name, price+change, market cap, P/E, dividend yield, RSI, 52W position — all dense in one row). Fundamentals split into three purpose-based sections: **Valuation** (MC, P/E TTM, Forward P/E, P/B, Div Yield), **Profitability** (ROE, Profit Margin, EPS), **Balance Sheet & Risk** (D/E, Beta, 52W High, 52W Low). Every peer-comparable metric gets a rank bar; cross-ticker-tricky metrics (EPS, Beta) render neutral
   - [views/overview.py](views/overview.py) — explicit section subheaders (`Markets` / `Your watchlist` / `Biggest mover today`). Same content, clearer framing as a dashboard vs a scroll
   - Test count 156 → 171: new [tests/test_peer_rank_bar.py](tests/test_peer_rank_bar.py) (15 tests covering `_position_pct`, `_goodness` direction logic, `_dot_color` thresholds, degenerate-range handling)
-  - Research: surveyed Koyfin, Bloomberg Terminal, TradingView, FinChat for UI patterns. Deliberately skipped full widget customization, multi-panel Bloomberg density, fake TTM/Q/Annual period toggles, command palette, and third-party Streamlit deps — each would add complexity without matching Bura's usage
+  - Research: surveyed Koyfin, Bloomberg Terminal, TradingView, FinChat for UI patterns. Deliberately skipped full widget customization, multi-panel Bloomberg density, fake TTM/Q/Annual period toggles, command palette, and third-party Streamlit deps — each would add complexity without matching the user's usage
 - **Phase 8** — UI polish + Analysis per-stock rewrite + data provenance + briefing v4: ✅ shipped
   - Tab nav CSS reworked: padded, button-like labels with hover + active-state borders (in [config/theme.py](config/theme.py))
   - [lib/provenance.py](lib/provenance.py) — `SOURCE_DESCRIPTIONS` catalogue + `render_footer(orch)` caption. Sidebar data-sources section upgraded to show each source's role + what it covers + cost. Footer caption appended under every live-data tab

@@ -1,11 +1,11 @@
 # AI Briefing Prompt Template
 
-This file is the prompt sent to Claude Sonnet 4.6 when Bura clicks "Generate Briefing". Edit the text inside the two `##` sections below to change tone, structure, or focus. Everything outside those sections is documentation and is ignored by the loader.
+This file is the prompt sent to Claude Sonnet 4.6 when the user clicks "Generate Briefing". Edit the text inside the two `##` sections below to change tone, structure, or focus. Everything outside those sections is documentation and is ignored by the loader.
 
 **Variables** (substituted at call time by `lib/briefing_engine.render_user_prompt`):
 
 - `{{watchlist_json}}` — structured JSON payload with all pairs' data (prices, ranges, technicals, news with URLs)
-- `{{generated_at_local}}` — ISO 8601 timestamp with Bura's local timezone offset
+- `{{generated_at_local}}` — ISO 8601 timestamp with the user's local timezone offset
 - `{{generated_at_et}}` — `"HH:MM ET"` — included for parity with the equity desk; FX is 24/5 so this is reference, not a session indicator
 - `{{market_session}}` — `"Open"` / `"Pre-market"` / `"After-hours"` / `"Closed"` — derived from NYSE hours; **for FX this is informational, not load-bearing.** FX market is open 24/5 with London, NY, and Tokyo handoffs.
 - `{{generated_at}}` — alias of `{{generated_at_local}}` for backwards compatibility
