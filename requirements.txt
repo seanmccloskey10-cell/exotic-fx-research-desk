@@ -1,0 +1,18 @@
+# Core — required for Phase 1 (yfinance MVP)
+# 1.32+ needed for st.dialog (used in views/briefing.py for the §5.6 confirmation modal).
+streamlit>=1.32.0
+yfinance>=0.2.40
+plotly>=5.20.0
+pandas>=2.0.0
+python-dotenv>=1.0.0
+PyYAML>=6.0.0
+requests>=2.31.0
+
+# Phase 4 — AI briefing (installed now to avoid a second install step later)
+anthropic>=0.39.0
+
+# Phase 10 — pretty briefing rendering (section-by-section HTML cards)
+markdown>=3.5
+
+# Dev / tests
+pytest>=8.0.0

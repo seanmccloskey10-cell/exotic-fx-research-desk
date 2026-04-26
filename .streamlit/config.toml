@@ -1,0 +1,17 @@
+# Streamlit config — dark theme baseline for Phase 1.
+# Phase 2 will layer custom CSS via config/theme.py on top of this.
+
+[theme]
+base = "dark"
+primaryColor = "#3B82F6"
+backgroundColor = "#0E1117"
+secondaryBackgroundColor = "#1E1E24"
+textColor = "#FAFAFA"
+font = "sans serif"
+
+[server]
+headless = true
+runOnSave = true
+
+[browser]
+gatherUsageStats = false

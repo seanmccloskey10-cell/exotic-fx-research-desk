@@ -1,0 +1,38 @@
+# Watchlist — edit this file to add / remove FX pairs.
+# Format: one entry per pair, with optional display overrides.
+# After editing, refresh the dashboard (or say to your agent: "Refresh the data").
+#
+# yfinance FX ticker convention: <BASE><QUOTE>=X
+#   USDTRY=X  → US dollar in Turkish lira (most common framing for EM USD pairs)
+#   EURUSD=X  → euro in US dollars (the major)
+#   GBPJPY=X  → cross pair (no USD leg)
+#
+# Default seed list below covers G10 anchor + EM staples + exotic / frontier
+# Asia. Strip what you don't trade and add what you do — the briefing prompt
+# scales to whatever's here.
+
+tickers:
+  - symbol: EURUSD=X
+    name: EUR / USD
+    note: G10 anchor — the world's most-traded pair
+  - symbol: USDTRY=X
+    name: USD / TRY
+    note: Turkish lira — high carry, high vol, CB independence story
+  - symbol: USDZAR=X
+    name: USD / ZAR
+    note: South African rand — EM commodity proxy
+  - symbol: USDBRL=X
+    name: USD / BRL
+    note: Brazilian real — Latam carry, fiscal dominance risk
+  - symbol: USDMXN=X
+    name: USD / MXN
+    note: Mexican peso — Latam carry, US trade exposure
+  - symbol: USDIDR=X
+    name: USD / IDR
+    note: Indonesian rupiah — Asia EM, rates anchor
+  - symbol: USDPHP=X
+    name: USD / PHP
+    note: Philippine peso — remittance-driven, BSP trajectory
+  - symbol: USDVND=X
+    name: USD / VND
+    note: Vietnamese dong — managed float, manufacturing-export proxy

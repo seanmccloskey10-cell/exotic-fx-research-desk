@@ -1,0 +1,41 @@
+# Environment / secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Runtime state
+.streamlit.pid
+.streamlit/secrets.toml
+
+# Briefings output (user-facing artifacts; kept locally, not shared)
+briefings/*.md
+briefings/.usage.jsonl
+
+# Session notes — builder-side history, not student-facing
+SESSION-NOTES.md
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Virtualenvs
+venv/
+.venv/
+env/
+
+# Editor / OS
+.vscode/*
+!.vscode/settings.json
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
