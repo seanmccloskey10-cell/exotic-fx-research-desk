@@ -69,7 +69,7 @@ That's it. Paste, send, wait for the report.
 - **Is the process alive?** Check for `.streamlit.pid` in the project root. If present, read the PID and verify it's running:
   - macOS/Linux: `ps -p <pid>` — exit 0 if alive, non-zero if dead. Also `kill -0 <pid>` (no actual kill, just tests).
   - Windows: `tasklist /FI "PID eq <pid>"`.
-- **Is port 8501 reachable?** Open http://localhost:8501 in her browser (macOS: `open http://localhost:8501`). If "site can't be reached", the dashboard isn't running.
+- **Is port 8501 reachable?** Open http://localhost:8501 in the browser (macOS: `open http://localhost:8501`). If "site can't be reached", the dashboard isn't running.
 - **Port conflict?** If starting the dashboard errors with "port already in use", a previous instance didn't shut down cleanly. Fix: `python3 run.py stop` then `python3 run.py start`. If stop fails, find + kill the stale python process manually:
   - macOS: `lsof -i :8501` to find the PID, then `kill -9 <pid>`.
   - Windows: `netstat -ano | findstr :8501`, then `taskkill /PID <pid> /F`.

@@ -8,7 +8,7 @@
 
 ## What this project is
 
-A local-first FX research dashboard. Python + Streamlit + Plotly. Runs on the user's machine, displays live FX data for his watchlist (default seed: EURUSD, USDTRY, USDZAR, USDBRL, USDMXN, USDIDR, USDPHP, USDVND — see [config/tickers.yaml](config/tickers.yaml)). yfinance is the primary data source — **the tool works with zero API keys.**
+A local-first FX research dashboard. Python + Streamlit + Plotly. Runs on the user's machine, displays live FX data for their watchlist (default seed: EURUSD, USDTRY, USDZAR, USDBRL, USDMXN, USDIDR, USDPHP, USDVND — see [config/tickers.yaml](config/tickers.yaml)). yfinance is the primary data source — **the tool works with zero API keys.**
 
 This repo is forked from `equity-research-desk` (the Roula tool, 2026-04-24), so most of the build history below references equities — that's the inheritance, not a confusion. The data layer, the briefing register, and the watchlist defaults are FX-shaped now; the architecture is the same.
 
@@ -38,7 +38,7 @@ These are load-bearing. Breaking them undoes safety properties Sean explicitly d
 
 5. **Project is self-contained.** Do not read from or write to personal directories on the host machine from inside the app. Any data the app needs lives under the project root.
 
-6. **macOS install path: GUI-first for non-technical users (the user).** When installing prerequisites on the user's machine (Python, Git, etc.), prefer install methods that trigger Apple's GUI password dialog (the `.pkg` installer, drag-to-Applications, signed App Store installs) over Terminal-based `sudo` / `curl | bash` scripts. **Reason captured from a prior student's L4 lesson (2026-04-24):** typing a password into a black Terminal window was uncomfortable; the GUI lock-icon dialog was fine. Same security, very different trust feel. See README "Step 0 — Pre-flight" and "Step 1" for the recommended GUI-first sequence. **Pre-warn her about expected permission popups before triggering installs** — the popup avalanche during her L4 setup slowed progress because each dialog was a context switch + an unprepared decision. Walking her through what to expect up front collapsed that friction.
+6. **macOS install path: GUI-first for non-technical users.** When installing prerequisites on the user's machine (Python, Git, etc.), prefer install methods that trigger Apple's GUI password dialog (the `.pkg` installer, drag-to-Applications, signed App Store installs) over Terminal-based `sudo` / `curl | bash` scripts. **Reason captured from a prior student's L4 lesson (2026-04-24):** typing a password into a black Terminal window was uncomfortable; the GUI lock-icon dialog was fine. Same security, very different trust feel. See README "Step 0 — Pre-flight" and "Step 1" for the recommended GUI-first sequence. **Pre-warn the user about expected permission popups before triggering installs** — the popup avalanche during the original L4 setup slowed progress because each dialog was a context switch + an unprepared decision. Walking them through what to expect up front collapsed that friction.
 
 ---
 
@@ -56,9 +56,9 @@ Everything Python-related in this project goes through `python run.py <cmd>`. It
 
 **On Windows**, swap `python3` for `python` (or `py`). Everything else is identical.
 
-**Do not tell the user to run `pip install`, `python -m venv`, or `streamlit run`.** Those are `run.py`'s job. If you need a new package, add it to `requirements.txt` and tell her to run `python3 run.py setup` — the deps marker will trigger a reinstall.
+**Do not tell the user to run `pip install`, `python -m venv`, or `streamlit run`.** Those are `run.py`'s job. If you need a new package, add it to `requirements.txt` and tell them to run `python3 run.py setup` — the deps marker will trigger a reinstall.
 
-If Python 3.11+ or Git is missing from her machine, see the **Bootstrap** section in [README.md](README.md) — macOS uses `brew install python@3.11` / Xcode command-line tools; Windows uses `winget install`.
+If Python 3.11+ or Git is missing from the user's machine, see the **Bootstrap** section in [README.md](README.md) — macOS uses `brew install python@3.11` / Xcode command-line tools; Windows uses `winget install`.
 
 ---
 
@@ -210,7 +210,7 @@ Before any of these, confirm with the user:
 
 ---
 
-## macOS gotchas (the user's machine)
+## macOS gotchas
 
 - **Use `python3`, not `python`.** macOS's default `python` is either absent or points to an old Apple-supplied Python (often 3.9). All launch commands in this repo use `python3`. The venv, once created, is fine — `run.py` routes everything through `.venv/bin/python` internally.
 - **TextEdit saves rich text by default.** Never ask the user to open `.env` in TextEdit — it'll save as `.rtf`. Edit `.env` via your own file tools; if you absolutely need a GUI editor, use VS Code (`code .env`) or `nano` in Terminal.

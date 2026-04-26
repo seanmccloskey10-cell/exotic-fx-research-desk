@@ -5,7 +5,7 @@
 > **Key FX-variant deltas as of 2026-04-26:**
 > - Watchlist swapped to G10 + EM + exotic FX pairs (see [config/tickers.yaml](config/tickers.yaml))
 > - Briefing prompt rewritten in macro/FX register (see [config/briefing_prompt.md](config/briefing_prompt.md)) — drops equity-specific fields (P/E, market cap, EPS, etc.) which yfinance returns null for FX
-> - Audience: the user (senior FX prop-desk operator, AI-fluent) — less hand-holding than Roula needed
+> - Audience: experienced FX trader, AI-fluent — less hand-holding needed than Roula's tool assumed
 > - "Crypto avoidance" rule from Roula's version dropped (not relevant to the user)
 > - Market-hours indicator still NYSE-derived (cosmetic gap; FX is 24/5 — see SESSION-NOTES.md for the deferred fix)
 

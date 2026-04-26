@@ -22,13 +22,13 @@ A local-first FX research dashboard — Python + Streamlit + Plotly, powered by 
 
 The user is on **macOS**. They're AI-fluent and won't be intimidated by a terminal, but they're still not a developer — handle setup, config, and any code-level changes yourself via natural-language requests. If a prerequisite is missing, install it yourself (with their one-time consent per install command). Work through these steps **in order**. Stop and ask for help **only** if all automated paths fail.
 
-> **If you're running this on Windows** (e.g. Sean testing from his dev machine), swap `python3` for `python` (or `py`), and use `winget` in place of `brew`. Specific Windows equivalents are listed in the "Windows notes" section below.
+> **If you're running this on Windows** (e.g. testing from a dev machine), swap `python3` for `python` (or `py`), and use `winget` in place of `brew`. Specific Windows equivalents are listed in the "Windows notes" section below.
 
 ### Step 0 — Pre-flight: macOS permissions the user will see (READ THIS FIRST)
 
-Before triggering any installs, **pre-warn the user** about the standard macOS permission dialogs he'll see. macOS pops up several security/permission prompts during a fresh dev environment setup; if they arrive without warning, they slow progress and create friction (captured from a prior student's L4 lesson, 2026-04-24).
+Before triggering any installs, **pre-warn the user** about the standard macOS permission dialogs they'll see. macOS pops up several security/permission prompts during a fresh dev environment setup; if they arrive without warning, they slow progress and create friction (captured from a prior student's L4 lesson, 2026-04-24).
 
-**Tell him up front, in plain English:**
+**Tell the user up front, in plain English:**
 
 > *"You're going to see a few popups from macOS. They're all normal Apple security checks — none of them are unsafe. Click Allow / Open / Install for each one. Here's what to expect:"*
 
@@ -38,7 +38,7 @@ Before triggering any installs, **pre-warn the user** about the standard macOS p
 | **"Terminal would like to access files in your Documents/Desktop folder"** | macOS asks before any Terminal-launched process can read those folders. | **OK** / **Allow** |
 | **"VS Code would like to access files in your folder"** | Same as above, for VS Code. | **OK** / **Allow** |
 | **".pkg installer is from an unidentified developer — would you like to open it?"** | Only if downloading the official Python `.pkg` from python.org. The signed installer is safe; this is just Gatekeeper double-checking. | **Open** (right-click `.pkg` → Open if Gatekeeper blocks the standard double-click) |
-| **macOS asks for his password** (during install) | Standard system-level install requesting admin rights. | **Use the GUI dialog** (the one with the lock icon — see Step 1 note below) |
+| **macOS asks for the user's password** (during install) | Standard system-level install requesting admin rights. | **Use the GUI dialog** (the one with the lock icon — see Step 1 note below) |
 
 ### Step 1 — Verify / install Python 3.11+ (GUI-first, password-safe)
 
@@ -54,12 +54,12 @@ python3 --version
 #   1. Open https://www.python.org/downloads/ in Safari/Chrome
 #   2. Click the macOS download for Python 3.11 or 3.12 (a .pkg file lands in Downloads)
 #   3. Double-click the .pkg → walk through the installer
-#      → macOS asks for his password via the standard GUI dialog (lock icon) — the user enters it there
+#      → macOS asks for the user's password via the standard GUI dialog (lock icon) — they enter it there
 #      → the installer adds python3 to PATH automatically
 #   4. Restart Terminal so PATH picks up the new python3
 ```
 
-**Why .pkg over Homebrew for non-technical users:** The Homebrew bootstrap (`/bin/bash -c "$(curl ...)"`) asks for the user's password in Terminal. the user was visibly uncomfortable typing his password into a black box where he couldn't see what he was typing. The GUI dialog feels safe (it's the same Apple-managed dialog he sees when installing any signed app); the Terminal password prompt does not. Even though both are technically equivalent, the trust gap is real.
+**Why .pkg over Homebrew for non-technical users:** The Homebrew bootstrap (`/bin/bash -c "$(curl ...)"`) asks for the user's password in Terminal. A prior student was visibly uncomfortable typing their password into a black box where they couldn't see what they were typing. The GUI dialog feels safe (it's the same Apple-managed dialog they see when installing any signed app); the Terminal password prompt does not. Even though both are technically equivalent, the trust gap is real.
 
 **Homebrew is the better option for technical users** (Sean) or once the user has installed Homebrew once via the GUI bootstrap. If Homebrew is already present:
 
@@ -87,7 +87,7 @@ brew install git
 ### Step 3 — Clone the repo
 
 ```bash
-# Clone into his Projects folder (create if missing)
+# Clone into the user's Projects folder (create if missing)
 mkdir -p ~/Projects && cd ~/Projects
 git clone https://github.com/seanmccloskey10-cell/exotic-fx-research-desk
 cd exotic-fx-research-desk
@@ -112,7 +112,7 @@ That's it. `run.py` handles:
 python3 run.py start
 ```
 
-Open <http://localhost:8501> in his browser (macOS: `open http://localhost:8501` opens the default browser). Tell him the dashboard is running.
+Open <http://localhost:8501> in the user's browser (macOS: `open http://localhost:8501` opens the default browser). Tell them the dashboard is running.
 
 ### Step 6 — Stop the dashboard (later)
 
