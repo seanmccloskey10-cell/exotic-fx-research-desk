@@ -62,16 +62,14 @@ Before anything else, verify I have the prerequisites installed:
 - Python 3.11+: `python3 --version`
 - VS Code: `which code` (NOT bare `code` — that may resolve to a
   Node binary inside VS Code's bundle on some setups)
-- Claude Code CLI: `which claude` (NOTE: this is the `claude`
-  command in Terminal — distinct from the "Claude" VS Code
-  extension. The extension is a chat panel inside VS Code; the CLI
-  is a separate npm-installed binary. This handoff prompt was
-  designed for the CLI; if I'm currently talking to you through
-  the VS Code extension, that's fine for running this prompt, but
-  the dashboard install steps below assume the CLI exists.)
-- Plan auth (NOT API key): once `claude` runs, it should be using
-  my plan login — NOT an `ANTHROPIC_API_KEY` env var. Check
+- Plan auth (NOT API key): you should be using my Claude plan
+  login — NOT an `ANTHROPIC_API_KEY` env var. Check
   `echo $ANTHROPIC_API_KEY` (should be empty or unset).
+
+(Note: the Claude Code CLI is OPTIONAL for this dashboard install.
+The Claude VS Code extension can do everything required — clone,
+run setup, launch Streamlit — equally well. Only mention the CLI
+if you can't do something without it.)
 
 If ANY of those are missing or wrong, STOP and tell me. I'll go run
 the prerequisites prompt at PREREQUISITES.md in this same repo
@@ -205,17 +203,15 @@ output). Specifically:
   in `code.cmd`. Or run `code.cmd --version` directly.)
 - Node.js + npm: `node --version` and `npm --version` (Claude Code
   CLI is installed via npm, so npm has to work)
-- Claude Code CLI: `where.exe claude` (NOTE: this is the `claude`
-  command in a terminal — distinct from the "Claude" VS Code
-  extension. The extension is a chat panel inside VS Code; the CLI
-  is a separate npm-installed binary. This handoff prompt was
-  designed for the CLI; if I'm currently talking to you through
-  the VS Code extension, that's fine for running this prompt, but
-  the dashboard install steps below assume the CLI exists.)
-- Plan auth (NOT API key): once `claude` runs, it should be using
-  my plan login — NOT an `ANTHROPIC_API_KEY` env var. Check
+- Plan auth (NOT API key): you should be using my Claude plan
+  login — NOT an `ANTHROPIC_API_KEY` env var. Check
   `Get-Item Env:\ANTHROPIC_API_KEY -ErrorAction SilentlyContinue`
   (should return empty).
+
+(Note: the Claude Code CLI is OPTIONAL for this dashboard install.
+The Claude VS Code extension can do everything required — clone,
+run setup, launch Streamlit — equally well. Only mention the CLI
+if you can't do something without it.)
 
 If ANY of those are missing or wrong, STOP and tell me. I'll go run
 the prerequisites prompt at PREREQUISITES.md in this same repo

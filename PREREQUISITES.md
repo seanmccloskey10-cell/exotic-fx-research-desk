@@ -1,13 +1,8 @@
-# PREREQUISITES.md — Run this prompt FIRST if you don't already have Claude Code CLI
+# PREREQUISITES.md — Run this prompt FIRST if you need to install dev tools
 
-**Why this exists:** the [HANDOFF-PROMPT.md](HANDOFF-PROMPT.md) prompts assume you have **Claude Code CLI** (the `claude` command in a terminal) installed and authenticated. If you don't — or if you're not sure — paste the prompt below into your AI agent FIRST. It batches every install into a single elevated session so you see one permission prompt instead of many.
+**Why this exists:** the [HANDOFF-PROMPT.md](HANDOFF-PROMPT.md) prompts assume you have **Git**, **Python 3.11+**, and **VS Code** installed, plus a Claude AI agent set up in VS Code (either the Claude Code CLI in a terminal OR the Claude VS Code extension chat panel — both work). If you don't have those, paste the prompt below into your AI agent FIRST. It batches every install into a single elevated session so you see one permission prompt instead of many.
 
-**Important disambiguation:**
-
-- **Claude Code CLI** — a terminal command (`claude`) installed via npm. This is what the handoff prompts need.
-- **Claude Code VS Code extension** — a chat panel inside VS Code. Different product. May or may not support all features the workspace expects (sub-agent dispatch in particular).
-
-If you're reading this through the VS Code extension's chat panel, that's fine for running this prerequisites prompt — but you'll still need the CLI installed before the handoff prompt will work end-to-end.
+**On Claude Code CLI vs the VS Code extension:** for these install prompts, **either works**. The VS Code extension can clone repos, run terminal commands, edit files, and launch processes — that's all that's needed. The CLI is only worth installing if you specifically want to use it.
 
 ---
 
@@ -25,12 +20,9 @@ THE GOAL of this prep step:
 1. Check what's already installed
 2. Install anything missing in ONE batched elevated PowerShell session
    (so I see ONE UAC prompt instead of N — minimize popup fatigue)
-3. Install Claude Code CLI specifically (this is separate from any
-   VS Code extension; the handoff prompts I'll paste afterwards
-   require the CLI, not the extension)
-4. Verify I'm authenticated to Claude via my plan, NOT an
+3. Verify I'm authenticated to Claude via my plan, NOT an
    ANTHROPIC_API_KEY env var
-5. STOP. I'll paste the next prompt (the actual tool install) after
+4. STOP. I'll paste the next prompt (the actual tool install) after
    you confirm prerequisites are good.
 
 Important Windows quirks for verification:
@@ -39,11 +31,6 @@ Important Windows quirks for verification:
   VS Code's bundled folder and return a Node version. Use
   `code.cmd --version` from PowerShell, or use `where.exe code` to
   see all candidates and pick the right one.
-- Use `where.exe claude` to detect Claude Code CLI presence — bare
-  `claude --version` will throw "command not recognized" if missing
-  but won't tell you whether the issue is missing-binary vs not-on-PATH.
-- Node.js is required for Claude Code CLI install (npm). If Node
-  is missing, install it first.
 
 Please follow this flow:
 
@@ -52,25 +39,20 @@ Please follow this flow:
 
    Version checks (use PowerShell, not bash):
    - `git --version`
-   - `node --version`
-   - `npm --version`
    - `python --version` (and `py --version` as fallback)
    - `where.exe code` (NOT `code --version` — see quirks above)
-   - `where.exe claude`
 
-   Report: which of {git, node, python, vscode, claude-cli} is
-   already installed and which is missing.
+   Report: which of {git, python, vscode} is already installed and
+   which is missing.
 
 2. PROPOSE a batched install plan. The pattern I want is:
-   - Use `winget install -e --id <id> --silent --accept-source-agreements --accept-package-agreements` for everything that has a winget package
+   - Use `winget install -e --id <id> --silent --accept-package-agreements --accept-source-agreements`
+     for everything that has a winget package
    - Run all winget commands sequentially in ONE elevated PowerShell
      session (one UAC prompt total)
-   - Then install Claude Code CLI via npm in a second non-elevated
-     step (npm doesn't need admin)
 
    Things you may need to install (only if missing per step 1):
    - Git for Windows:    winget id  Git.Git
-   - Node.js LTS:        winget id  OpenJS.NodeJS.LTS
    - Python 3.11:        winget id  Python.Python.3.11
    - VS Code:            winget id  Microsoft.VisualStudioCode
 
@@ -83,37 +65,34 @@ Please follow this flow:
    completes. If UAC fires more than once, something's wrong with
    the batching — pause and tell me.
 
-5. AFTER the system installs complete, install Claude Code CLI:
-   `npm install -g @anthropic-ai/claude-code`
-
-   Then in a FRESH terminal (so PATH refreshes):
-   - `where.exe claude`  → should show a path
-   - `claude --version`  → should print a version
-
-6. AUTH CHECK. Run `claude` (or `claude /status` if it has that
-   command) and tell me whether it's using:
+5. AUTH CHECK. Tell me whether I'm using:
    - My Claude plan login (good — what I want), OR
    - An ANTHROPIC_API_KEY env var (NOT what I want for these tools)
 
-   If it's using the env var, run `Get-Item Env:\ANTHROPIC_API_KEY`
-   to confirm, then suggest I unset it before proceeding:
-   `Remove-Item Env:\ANTHROPIC_API_KEY` (current session)
-   `[Environment]::SetEnvironmentVariable("ANTHROPIC_API_KEY", $null, "User")` (persistent for me)
+   If env var is set, run `Get-Item Env:\ANTHROPIC_API_KEY` to
+   confirm, then suggest I unset it before proceeding:
+   `Remove-Item Env:\ANTHROPIC_API_KEY`
+   `[Environment]::SetEnvironmentVariable("ANTHROPIC_API_KEY", $null, "User")`
 
-   If `claude login` is needed (because I haven't logged in yet),
-   walk me through that — it opens a browser to authenticate.
+6. STOP. Confirm: git OK, python OK, code.cmd OK, plan auth OK.
+   I'll paste the next prompt (dashboard or workspace handoff) once
+   you say "prerequisites complete".
 
-7. STOP. Confirm: git ✅, node ✅, python ✅, code.cmd ✅, claude
-   CLI ✅, plan auth ✅. I'll paste the next prompt (dashboard or
-   workspace handoff) once you say "prerequisites complete".
+(Optional — only if I ask: install the Claude Code CLI via
+`npm install -g @anthropic-ai/claude-code` in a non-elevated
+PowerShell after Node.js is installed via
+`winget install -e --id OpenJS.NodeJS.LTS --silent --accept-package-agreements --accept-source-agreements`.
+But the install prompts work fine through whichever Claude agent
+I'm already using — including the VS Code extension chat panel —
+so don't push this on me.)
 
 Common Windows dialog you'll see (pre-warning so I don't panic):
 - ONE UAC prompt at the start of the batched winget install
-  ("Do you want to allow this app to make changes?") → click Yes
+  ("Do you want to allow this app to make changes?") -> click Yes
 - SmartScreen on signed installers ("Windows protected your PC")
-  → click "More info" → "Run anyway" if it's from python.org or
+  -> click "More info" -> "Run anyway" if it's from python.org or
   code.visualstudio.com (winget signed sources usually skip this)
-- "Allow Python through Windows Defender Firewall?" → click Allow
+- "Allow Python through Windows Defender Firewall?" -> click Allow
 - I will NEVER need to type my password into a terminal. If a step
   asks for that, stop and tell me.
 
@@ -132,20 +111,10 @@ THE GOAL of this prep step:
 1. Check what's already installed
 2. Install anything missing — using GUI password dialogs (the lock
    icon), NEVER terminal sudo
-3. Install Claude Code CLI specifically (this is separate from any
-   VS Code extension; the handoff prompts I'll paste afterwards
-   require the CLI, not the extension)
-4. Verify I'm authenticated to Claude via my plan, NOT an
+3. Verify I'm authenticated to Claude via my plan, NOT an
    ANTHROPIC_API_KEY env var
-5. STOP. I'll paste the next prompt (the actual tool install) after
+4. STOP. I'll paste the next prompt (the actual tool install) after
    you confirm prerequisites are good.
-
-Important disambiguation:
-- "Claude Code CLI" (the `claude` command in Terminal) is a separate
-  product from the "Claude" VS Code extension. The handoff prompts
-  need the CLI. If I'm talking to you through the VS Code extension
-  right now, that's fine for prep — but the actual tools require
-  the CLI to be installed.
 
 Please follow this flow:
 
@@ -153,13 +122,11 @@ Please follow this flow:
    installed:
    - `git --version` (or note if it triggers the Xcode CLT install
      dialog)
-   - `node --version` and `npm --version`
    - `python3 --version`
    - `which code` (VS Code's CLI helper, if installed)
-   - `which claude`
 
-   Report: which of {git, xcode-clt, node, python, vscode, claude-cli}
-   is already installed and which is missing.
+   Report: which of {git, xcode-clt, python, vscode} is already
+   installed and which is missing.
 
 2. PROPOSE an install plan that PREFERS GUI dialogs over terminal
    sudo. Captured rule from prior user research: typing a password
@@ -172,7 +139,6 @@ Please follow this flow:
      command line developer tools — install?")
    - Homebrew — one-time bootstrap (uses GUI dialog when prompting
      for sudo). After that, `brew install` is much smoother.
-   - Node.js LTS — `brew install node` (or python.org-style installer)
    - Python 3.11 — prefer the official .pkg installer from
      python.org (uses Apple's GUI password dialog with lock icon)
      over `brew install python@3.11`
@@ -196,14 +162,7 @@ Please follow this flow:
    - macOS asking for my password during install → ALWAYS use the
      Apple GUI password dialog (lock icon). NEVER terminal.
 
-5. AFTER the system installs complete, install Claude Code CLI:
-   `npm install -g @anthropic-ai/claude-code`
-
-   Then in a FRESH Terminal (so PATH refreshes):
-   - `which claude` → should show a path
-   - `claude --version` → should print a version
-
-6. AUTH CHECK. Run `claude` and tell me whether it's using:
+5. AUTH CHECK. Tell me whether I'm using:
    - My Claude plan login (good — what I want), OR
    - An ANTHROPIC_API_KEY env var (NOT what I want for these tools)
 
@@ -212,12 +171,15 @@ Please follow this flow:
    Edit ~/.zshrc or ~/.bash_profile to remove the persistent setting
    if it's there.
 
-   If `claude login` is needed, walk me through that — it opens a
-   browser to authenticate.
+6. STOP. Confirm: git OK, python3 OK, code (VS Code) OK, plan auth
+   OK. I'll paste the next prompt once you say "prerequisites
+   complete".
 
-7. STOP. Confirm: git ✅, node ✅, python3 ✅, code (VS Code) ✅,
-   claude CLI ✅, plan auth ✅. I'll paste the next prompt once you
-   say "prerequisites complete".
+(Optional — only if I ask: install the Claude Code CLI via
+`npm install -g @anthropic-ai/claude-code` after Node.js is
+installed via `brew install node`. But the install prompts work
+fine through whichever Claude agent I'm already using — including
+the VS Code extension chat panel — so don't push this on me.)
 
 Don't run anything until I say "go" after step 2's plan.
 ```
@@ -226,17 +188,15 @@ Don't run anything until I say "go" after step 2's plan.
 
 ## What "prerequisites complete" looks like
 
-Before pasting the dashboard or workspace handoff prompt, your agent should have confirmed all six:
+Before pasting the dashboard or workspace handoff prompt, your agent should have confirmed:
 
 - [ ] `git --version` returns a real version
-- [ ] `node --version` and `npm --version` both work (Claude Code CLI needs npm)
 - [ ] `python --version` (Windows) or `python3 --version` (Mac) returns 3.11+
 - [ ] `code.cmd --version` (Windows) or `which code` (Mac) returns a real VS Code path
-- [ ] `where.exe claude` (Windows) or `which claude` (Mac) returns a real path — Claude Code CLI is installed
-- [ ] `claude` runs without prompting for an API key — auth is via plan login, not `ANTHROPIC_API_KEY`
+- [ ] You're authenticated to Claude via plan login, not via `ANTHROPIC_API_KEY`
 
-Once all six are green, paste the [HANDOFF-PROMPT.md](HANDOFF-PROMPT.md) variant matching your OS and proceed.
+Once those four are green, paste the [HANDOFF-PROMPT.md](HANDOFF-PROMPT.md) variant matching your OS.
 
-## If you already have Claude Code CLI installed and working
+## If you already have those four installed
 
-You can skip this PREREQUISITES file entirely and go straight to [HANDOFF-PROMPT.md](HANDOFF-PROMPT.md). The handoff prompt itself will check the prerequisites quickly at the start; if anything's missing it'll tell you, and you can come back here.
+Skip this PREREQUISITES file. Go straight to [HANDOFF-PROMPT.md](HANDOFF-PROMPT.md) — the handoff prompt itself checks prerequisites at the start, and if anything's missing it'll tell you to come back here.
