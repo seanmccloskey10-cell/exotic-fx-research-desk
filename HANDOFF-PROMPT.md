@@ -1,10 +1,25 @@
 # HANDOFF-PROMPT.md — Paste this into Claude Code
 
-The fastest way to install this tool: open VS Code on a fresh machine, run `claude` in the terminal to start Claude Code, then paste **one** of the two prompts below into the chat. Pick the one matching your OS. The agent enters plan mode first, tells you what's already on your machine, asks for one "go," then handles the entire setup.
+The fastest way to install this tool: open VS Code on a fresh machine, run `claude` in the terminal to start Claude Code CLI, then paste **one** of the two prompts below into the chat. Pick the one matching your OS. The agent enters plan mode first, tells you what's already on your machine, asks for one "go," then handles the entire setup.
+
+## ⚠ Read this first — install prerequisites before pasting the handoff prompt
+
+The handoff prompts below assume you already have:
+
+- **Git**
+- **Python 3.11+**
+- **VS Code**
+- **Node.js + npm** (Claude Code CLI is installed via npm)
+- **Claude Code CLI** (`claude` command in a terminal — *NOT* the VS Code "Claude" extension; they're separate products and the handoff prompt assumes the CLI)
+- **Authenticated to a Claude plan** (not via `ANTHROPIC_API_KEY` env var)
+
+**If any of those are missing, run [PREREQUISITES.md](PREREQUISITES.md) FIRST.** The prerequisites prompt batches every install into one elevated session (one UAC popup on Windows, one Apple GUI password dialog on Mac) so you don't drown in permission prompts. It also installs the Claude Code CLI and verifies plan auth before you paste the handoff.
+
+The handoff prompts below check prerequisites at the top. If they're missing, the agent will tell you to go run PREREQUISITES.md first.
 
 The prompts are **deliberately verbose**. They bake in six lessons from prior user research:
 
-1. **Plan mode FIRST** — the agent must report what it found before installing anything
+1. **Plan mode FIRST** — the agent must report what it found before doing anything
 2. **Permissions ack'd up front** — no surprise dialogs mid-execution
 3. **GUI password dialogs / native UAC, NEVER terminal sudo** — same security, different trust feel
 4. **Read README + CLAUDE.md before running anything** — the codebase has invariants that matter
@@ -41,67 +56,63 @@ what to do about a `.streamlit.pid` file or whether to use `python` vs
 `python3`. The tool's `run.py` wrapper is cross-platform; just use
 `python3` on my machine consistently.
 
-Permissions — just a one-time ack from me per install. You'll need
-some or all of these depending on what's already on my machine:
-- Xcode command-line tools (one-time Apple install dialog, for git)
-- Python 3.11+ via the official .pkg installer from python.org
-  (uses Apple's standard GUI password dialog with the lock icon —
-  never a terminal sudo prompt)
-- VS Code (if I don't have it — drag-to-Applications install)
-- The repo's Python dependencies (Streamlit, Plotly, yfinance, etc.)
-  go into a local .venv inside the repo — your run.py setup command
-  handles them
+PREREQUISITES CHECK — DO THIS FIRST
+Before anything else, verify I have the prerequisites installed:
+- Git: `git --version`
+- Python 3.11+: `python3 --version`
+- VS Code: `which code` (NOT bare `code` — that may resolve to a
+  Node binary inside VS Code's bundle on some setups)
+- Claude Code CLI: `which claude` (NOTE: this is the `claude`
+  command in Terminal — distinct from the "Claude" VS Code
+  extension. The extension is a chat panel inside VS Code; the CLI
+  is a separate npm-installed binary. This handoff prompt was
+  designed for the CLI; if I'm currently talking to you through
+  the VS Code extension, that's fine for running this prompt, but
+  the dashboard install steps below assume the CLI exists.)
+- Plan auth (NOT API key): once `claude` runs, it should be using
+  my plan login — NOT an `ANTHROPIC_API_KEY` env var. Check
+  `echo $ANTHROPIC_API_KEY` (should be empty or unset).
+
+If ANY of those are missing or wrong, STOP and tell me. I'll go run
+the prerequisites prompt at PREREQUISITES.md in this same repo
+(https://github.com/seanmccloskey10-cell/exotic-fx-research-desk/blob/main/PREREQUISITES.md)
+to install them properly in one batch — then come back here.
+
+If all prerequisites are good, proceed:
 
 I'll say "go" once when you ask. Don't ask again per command.
 
 Please follow this flow:
 
-1. ENTER PLAN MODE FIRST. Tell me:
-   - What's already installed on my Mac (run version commands; report
-     what you find)
-   - What you propose to install
+1. ENTER PLAN MODE FIRST. After confirming prerequisites, tell me:
    - Which README steps you'll follow
    - Anything in the repo that looks Windows-specific that you'll
      need to work around on macOS
 
-   Don't start running setup until I say "go".
+   Don't start running anything until I say "go".
 
-2. Pre-warn me about macOS popups I'll see during setup, in plain
-   English. The common ones:
-   - "The git command requires the command line developer tools —
-     install?" → Click Install. Takes ~5 minutes.
-   - "Python.pkg is from an unidentified developer — open?"
-     → Right-click the .pkg → Open if Gatekeeper blocks the standard
-     double-click.
-   - "Terminal would like to access files in your Documents folder"
-     → OK / Allow.
-   - macOS asking for my password during install
-     → ALWAYS use the Apple GUI password dialog (the one with the
-     lock icon). NEVER ask me to type my password into a terminal
-     window. Same security, very different feel.
-
-3. Read README.md and CLAUDE.md end-to-end before running anything.
+2. Read README.md and CLAUDE.md end-to-end before running anything.
    The README has the full bootstrap walkthrough; CLAUDE.md has the
    non-negotiable rules and explains how the codebase is organized
    (Settings tab is read-only, Anthropic API calls only from
    views/briefing.py, etc.).
 
-4. Read PRD.md if you need full product context. It's a generic FX
+3. Read PRD.md if you need full product context. It's a generic FX
    research dashboard spec — not personalized to any specific user.
 
-5. Clone the repo into ~/Projects/exotic-fx-research-desk (create the
-   Projects folder if it doesn't exist).
+4. Clone the repo into ~/Projects/exotic-fx-research-desk (create
+   the Projects folder if it doesn't exist).
 
-6. Open the cloned folder in VS Code.
+5. Open the cloned folder in VS Code.
 
-7. Run `python3 run.py setup`. This creates a .venv, installs deps,
+6. Run `python3 run.py setup`. This creates a .venv, installs deps,
    copies .env.example to .env, and runs setup_check.py. Report each
    step.
 
-8. Run `python3 run.py start` to start the dashboard. Then open
+7. Run `python3 run.py start` to start the dashboard. Then open
    http://localhost:8501 in my browser.
 
-9. Stop when the dashboard is running and the watchlist shows live
+8. Stop when the dashboard is running and the watchlist shows live
    FX rates. DO NOT volunteer to set up the optional Anthropic API
    key for AI Briefings — that's a deliberate add-on for later.
 
@@ -140,14 +151,14 @@ Tokyo handoffs. The builder intentionally deferred fixing this. Don't
 "fix" it without my approval.
 
 If you hit anything unexpected during setup — network failure, a
-dependency install error, a permissions dialog you don't understand,
-or anything that asks me to type my password into a terminal — STOP
-and ask me before continuing. Don't silently skip or work around
-anything.
+dependency install error, or anything that asks me to type my
+password into a terminal — STOP and ask me before continuing. Don't
+silently skip or work around anything.
 
 Report back at each major step. Keep me in the loop.
 
-Let's begin — please enter plan mode and tell me what's on my machine.
+Let's begin — please run the prerequisites check and tell me what
+you find.
 ```
 
 ---
@@ -179,65 +190,75 @@ adjust silently — don't ask me what to do about `.streamlit.pid` or
 whether to use `python3` vs `python`. Use `python` (or `py` if Python
 Launcher is what's installed) on my machine consistently.
 
-Permissions — just a one-time ack from me per install. You'll need
-some or all of these depending on what's already on my machine:
-- Git for Windows (winget install -e --id Git.Git triggers UAC)
-- Python 3.11+ (winget install -e --id Python.Python.3.11; if using
-  the python.org installer instead, MAKE SURE the "Add Python to
-  PATH" checkbox is ticked on the first installer screen)
-- VS Code (winget install -e --id Microsoft.VisualStudioCode)
-- The repo's Python dependencies (Streamlit, Plotly, yfinance, etc.)
-  go into a local .venv inside the repo — your run.py setup command
-  handles them
+PREREQUISITES CHECK — DO THIS FIRST
+Before anything else, verify I have the prerequisites installed.
+USE POWERSHELL for the version checks (NOT bash / git-bash — bash on
+Windows resolves some commands differently and gives confusing
+output). Specifically:
+
+- Git: `git --version`
+- Python 3.11+: `python --version` (and `py --version` as fallback)
+- VS Code: `where.exe code` (NOT bare `code --version` — on Windows
+  in bash, `code` may resolve to a Node.js binary inside VS Code's
+  bundled folder and return a Node version like v22.x. Use
+  `where.exe code` to see all candidates and pick the one ending
+  in `code.cmd`. Or run `code.cmd --version` directly.)
+- Node.js + npm: `node --version` and `npm --version` (Claude Code
+  CLI is installed via npm, so npm has to work)
+- Claude Code CLI: `where.exe claude` (NOTE: this is the `claude`
+  command in a terminal — distinct from the "Claude" VS Code
+  extension. The extension is a chat panel inside VS Code; the CLI
+  is a separate npm-installed binary. This handoff prompt was
+  designed for the CLI; if I'm currently talking to you through
+  the VS Code extension, that's fine for running this prompt, but
+  the dashboard install steps below assume the CLI exists.)
+- Plan auth (NOT API key): once `claude` runs, it should be using
+  my plan login — NOT an `ANTHROPIC_API_KEY` env var. Check
+  `Get-Item Env:\ANTHROPIC_API_KEY -ErrorAction SilentlyContinue`
+  (should return empty).
+
+If ANY of those are missing or wrong, STOP and tell me. I'll go run
+the prerequisites prompt at PREREQUISITES.md in this same repo
+(https://github.com/seanmccloskey10-cell/exotic-fx-research-desk/blob/main/PREREQUISITES.md)
+to install them properly in one batched session — then come back
+here.
+
+If all prerequisites are good, proceed.
 
 I'll say "go" once when you ask. Don't ask again per command.
 
 Please follow this flow:
 
-1. ENTER PLAN MODE FIRST. Tell me:
-   - What's already installed on my Windows machine (run version
-     commands; report what you find)
-   - What you propose to install
+1. ENTER PLAN MODE FIRST. After confirming prerequisites, tell me:
    - Which README steps you'll follow
    - Anything in the repo that looks Mac-specific that you'll need
      to work around on Windows
 
-   Don't start running setup until I say "go".
+   Don't start running anything until I say "go".
 
-2. Pre-warn me about Windows dialogs I'll see during setup, in plain
-   English. The common ones:
-   - UAC ("Do you want to allow this app to make changes?") → click
-     Yes. Standard Windows admin permission for an installer.
-   - SmartScreen ("Windows protected your PC") → click "More info"
-     then "Run anyway" if it's a signed installer from python.org or
-     code.visualstudio.com.
-   - "Allow Python through Windows Defender Firewall?" → click Allow.
-   I will NEVER need to type my password into a terminal. If a step
-   asks for that, stop and tell me — that's wrong.
-
-3. Read README.md and CLAUDE.md end-to-end before running anything.
+2. Read README.md and CLAUDE.md end-to-end before running anything.
    The README has the full bootstrap walkthrough; CLAUDE.md has the
    non-negotiable rules and explains how the codebase is organized
    (Settings tab is read-only, Anthropic API calls only from
    views/briefing.py, etc.).
 
-4. Read PRD.md if you need full product context. It's a generic FX
+3. Read PRD.md if you need full product context. It's a generic FX
    research dashboard spec — not personalized to any specific user.
 
-5. Clone the repo into %USERPROFILE%\Projects\exotic-fx-research-desk
+4. Clone the repo into %USERPROFILE%\Projects\exotic-fx-research-desk
    (create the Projects folder if it doesn't exist).
 
-6. Open the cloned folder in VS Code.
+5. Open the cloned folder in VS Code.
 
-7. Run `python run.py setup`. This creates a .venv, installs deps,
+6. Run `python run.py setup`. This creates a .venv, installs deps,
    copies .env.example to .env, and runs setup_check.py. Report each
    step. (If `python` doesn't work, try `py run.py setup` — the
    Windows Python Launcher.)
 
-8. Run `python run.py start` to start the dashboard. Then open
+7. Run `python run.py start` to start the dashboard. Then open
    http://localhost:8501 in my browser.
 
-9. Stop when the dashboard is running and the watchlist shows live
+8. Stop when the dashboard is running and the watchlist shows live
    FX rates. DO NOT volunteer to set up the optional Anthropic API
    key for AI Briefings — that's a deliberate add-on for later.
 
@@ -276,14 +297,14 @@ Tokyo handoffs. The builder intentionally deferred fixing this. Don't
 "fix" it without my approval.
 
 If you hit anything unexpected during setup — network failure, a
-dependency install error, a UAC dialog you don't understand, or
-anything that asks me to type my password into a terminal — STOP
-and ask me before continuing. Don't silently skip or work around
-anything.
+dependency install error, or anything that asks me to type my
+password into a terminal — STOP and ask me before continuing. Don't
+silently skip or work around anything.
 
 Report back at each major step. Keep me in the loop.
 
-Let's begin — please enter plan mode and tell me what's on my machine.
+Let's begin — please run the prerequisites check (in PowerShell, not
+bash) and tell me what you find.
 ```
 
 ---
