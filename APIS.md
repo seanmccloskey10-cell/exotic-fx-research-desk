@@ -89,7 +89,7 @@ These ship with the tool. Everything below is optional she can add.
 | World Bank Open Data | Unlimited | N/A | Country-level economic data. |
 | OECD Stats | Unlimited | N/A | International economic indicators. |
 | Trading Economics | Limited | $25/mo | All-in-one macro. |
-| EIA (US Energy Info) | Unlimited | N/A | Energy prices, production. Useful for IREN/energy names. |
+| EIA (US Energy Info) | Unlimited | N/A | Energy prices, production. Useful for commodity-correlated FX (CAD, NOK, AUD). |
 
 ### Earnings & calendar
 
@@ -160,7 +160,7 @@ When she considers adding one, her agent should walk her through these questions
 
 ---
 
-## Quick recommendation matrix for Roula
+## Quick recommendation matrix for the user
 
 | Her question | Best free pick | Best paid pick (under $25/mo) |
 |---|---|---|

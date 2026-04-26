@@ -114,11 +114,11 @@ class _FakeOrch:
 # ---------- Context builder ----------
 
 def test_build_context_includes_every_ticker():
-    settings = _Settings([_Ticker("CRDO", "Credo"), _Ticker("HIMS", "Hims & Hers")])
+    settings = _Settings([_Ticker("EURUSD=X", "EUR/USD"), _Ticker("USDTRY=X", "USD/TRY")])
     ctx = build_watchlist_context(settings, _FakeOrch())
     assert len(ctx["tickers"]) == 2
-    assert ctx["tickers"][0]["ticker"] == "CRDO"
-    assert ctx["tickers"][1]["ticker"] == "HIMS"
+    assert ctx["tickers"][0]["ticker"] == "EURUSD=X"
+    assert ctx["tickers"][1]["ticker"] == "USDTRY=X"
     # v2 prompt: local ISO + ET + session, no bare `generated_at`.
     assert ctx["generated_at_local"]
     assert "ET" in ctx["generated_at_et"]
@@ -130,20 +130,20 @@ def test_build_context_caps_news_at_three_per_ticker():
         {"title": f"H{i}", "publisher": "X", "published_at": datetime(2026, 4, 20)}
         for i in range(10)
     ]
-    settings = _Settings([_Ticker("CRDO")])
+    settings = _Settings([_Ticker("EURUSD=X")])
     orch = _FakeOrch(news=long_news)
     ctx = build_watchlist_context(settings, orch)
     assert len(ctx["tickers"][0]["recent_news"]) == 3
 
 
 def test_build_context_handles_missing_data_gracefully():
-    settings = _Settings([_Ticker("CRDO")])
+    settings = _Settings([_Ticker("EURUSD=X")])
     orch = _FakeOrch(
         quote=None, fund=None, info=None, news=[], earnings=None, history=None
     )
     ctx = build_watchlist_context(settings, orch)
     entry = ctx["tickers"][0]
-    assert entry["ticker"] == "CRDO"
+    assert entry["ticker"] == "EURUSD=X"
     assert entry["price"] is None
     assert entry["recent_news"] == []
     assert entry["upcoming_earnings"] is None
@@ -158,7 +158,7 @@ def test_build_context_handles_missing_data_gracefully():
 
 def test_build_context_v3_technicals_present():
     """Every ticker entry gets a complete `technicals` subdict."""
-    settings = _Settings([_Ticker("CRDO", "Credo")])
+    settings = _Settings([_Ticker("EURUSD=X", "EUR/USD")])
     ctx = build_watchlist_context(settings, _FakeOrch())
     t = ctx["tickers"][0]["technicals"]
     expected_keys = {
@@ -179,7 +179,7 @@ def test_build_context_v3_technicals_present():
 
 def test_build_context_v3_rsi_in_valid_range():
     """RSI(14) from a real-looking series must land in [0, 100]."""
-    settings = _Settings([_Ticker("CRDO")])
+    settings = _Settings([_Ticker("EURUSD=X")])
     ctx = build_watchlist_context(settings, _FakeOrch())
     rsi_val = ctx["tickers"][0]["technicals"]["rsi_14"]
     assert rsi_val is not None
@@ -188,7 +188,7 @@ def test_build_context_v3_rsi_in_valid_range():
 
 def test_build_context_v3_macd_state_label_valid():
     """Crossover label must be one of the three documented strings."""
-    settings = _Settings([_Ticker("CRDO")])
+    settings = _Settings([_Ticker("EURUSD=X")])
     ctx = build_watchlist_context(settings, _FakeOrch())
     cross = ctx["tickers"][0]["technicals"]["macd_crossover"]
     assert cross in {"bullish", "bearish", "none"}
@@ -221,7 +221,7 @@ def test_build_context_v4_extended_fundamentals_present():
         "fifty_two_week_high": 120.0,
         "fifty_two_week_low": 80.0,
     }
-    settings = _Settings([_Ticker("CRDO")])
+    settings = _Settings([_Ticker("EURUSD=X")])
     ctx = build_watchlist_context(settings, _FakeOrch(fund=fund))
     entry = ctx["tickers"][0]
     for key in (
@@ -408,7 +408,7 @@ def test_with_frontmatter_includes_provenance():
         cost_usd=0.0375,
         model="claude-sonnet-4-6",
     )
-    out = result.with_frontmatter(["CRDO", "HIMS"])
+    out = result.with_frontmatter(["EURUSD=X", "USDTRY=X"])
     # Frontmatter must appear at the top, bracketed by ---
     assert out.startswith("---\n")
     assert "model: claude-sonnet-4-6" in out
@@ -416,7 +416,7 @@ def test_with_frontmatter_includes_provenance():
     assert "input_tokens: 5000" in out
     assert "output_tokens: 1500" in out
     assert "cost_usd: 0.037500" in out
-    assert "watchlist: [CRDO, HIMS]" in out
+    assert "watchlist: [EURUSD, USDTRY]" in out
     # Body preserved
     assert "# Weekly briefing" in out
     assert "Body text." in out

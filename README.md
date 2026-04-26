@@ -4,7 +4,7 @@ A local-first FX research dashboard — Python + Streamlit + Plotly, powered by 
 
 > **Audience note.** This README is written for an AI coding agent (Claude Code) to parse and execute. The user is an **FX research professional** — AI-fluent and a heavy Cowork user, but **not a developer**. They'll say things like *"Clone this and set it up for me."* They have Bloomberg (or comparable real-time market data) — this tool is the synthesis layer over data they already have, not a replacement for it. Clarity for the agent beats prose for a human reader.
 >
-> **This repo is forked from `equity-research-desk`** (Roula's tool, 2026-04-24). The architecture and bootstrap flow are identical; the watchlist, briefing register, and audience are FX-shaped. Most of this README is inherited verbatim — only the data + register sections diverge.
+> **This repo is forked from a prior `equity-research-desk` template** (2026-04-24). The architecture and bootstrap flow are identical; the watchlist, briefing register, and audience are FX-shaped. Most of this README is inherited verbatim — only the data + register sections diverge.
 
 ---
 
@@ -26,7 +26,7 @@ The user is on **macOS**. They're AI-fluent and won't be intimidated by a termin
 
 ### Step 0 — Pre-flight: macOS permissions the user will see (READ THIS FIRST)
 
-Before triggering any installs, **pre-warn the user** about the standard macOS permission dialogs they'll see. macOS pops up several security/permission prompts during a fresh dev environment setup; if they arrive without warning, they slow progress and create friction (captured from a prior student's L4 lesson, 2026-04-24).
+Before triggering any installs, **pre-warn the user** about the standard macOS permission dialogs they'll see. macOS pops up several security/permission prompts during a fresh dev environment setup; if they arrive without warning, they slow progress and create friction (captured from prior user research, 2026-04-24).
 
 **Tell the user up front, in plain English:**
 
@@ -44,7 +44,7 @@ Before triggering any installs, **pre-warn the user** about the standard macOS p
 
 macOS ships with an older Apple-supplied Python; you need 3.11 or newer.
 
-**For non-technical users (the user and similar): prefer the official `.pkg` installer.** The `.pkg` installer triggers Apple's standard GUI password dialog (the one with the lock icon) when admin rights are needed. This is much safer-feeling than typing a password into a black Terminal window — important UX point captured from a prior student's L4 lesson (2026-04-24): *terminal sudo password entry was uncomfortable; GUI password popup was fine.* Same security, very different feel.
+**For non-technical users (the user and similar): prefer the official `.pkg` installer.** The `.pkg` installer triggers Apple's standard GUI password dialog (the one with the lock icon) when admin rights are needed. This is much safer-feeling than typing a password into a black Terminal window — important UX point captured from prior user research (2026-04-24): *terminal sudo password entry was uncomfortable; GUI password popup was fine.* Same security, very different feel.
 
 ```bash
 # Check first — macOS should have python3 as a command:
@@ -59,7 +59,7 @@ python3 --version
 #   4. Restart Terminal so PATH picks up the new python3
 ```
 
-**Why .pkg over Homebrew for non-technical users:** The Homebrew bootstrap (`/bin/bash -c "$(curl ...)"`) asks for the user's password in Terminal. A prior student was visibly uncomfortable typing their password into a black box where they couldn't see what they were typing. The GUI dialog feels safe (it's the same Apple-managed dialog they see when installing any signed app); the Terminal password prompt does not. Even though both are technically equivalent, the trust gap is real.
+**Why .pkg over Homebrew for non-technical users:** The Homebrew bootstrap (`/bin/bash -c "$(curl ...)"`) asks for the user's password in Terminal. Non-technical users are typically uncomfortable typing their password into a black box where they can't see what they're typing. The GUI dialog feels safe (it's the same Apple-managed dialog they see when installing any signed app); the Terminal password prompt does not. Even though both are technically equivalent, the trust gap is real.
 
 **Homebrew is the better option for technical users** (Sean) or once the user has installed Homebrew once via the GUI bootstrap. If Homebrew is already present:
 

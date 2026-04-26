@@ -2,7 +2,7 @@
 
 Usage:
     orch = build_default_orchestrator()
-    quote = orch.get_quote("CRDO")   # tries yfinance first, then Finnhub, ...
+    quote = orch.get_quote("EURUSD=X")   # tries yfinance first, then Finnhub, ...
 
 Design:
 - Only sources returning True from `is_configured()` are consulted.

@@ -1,8 +1,8 @@
 # Troubleshooting
 
-Common problems and how to fix them. Written for Roula's Claude Code agent to scan when she describes a problem — paste the symptom into the search box here, the agent executes the fix.
+Common problems and how to fix them. Written for the user's Claude Code agent to scan when she describes a problem — paste the symptom into the search box here, the agent executes the fix.
 
-Roula is on **macOS**, so macOS commands are shown first. Windows equivalents are in parentheses where relevant (for Sean testing, or future Windows students).
+the user is on **macOS**, so macOS commands are shown first. Windows equivalents are in parentheses where relevant (for Sean testing, or future Windows students).
 
 ---
 
@@ -51,7 +51,7 @@ File was saved with a wrong extension because the OS/editor hid or added it.
 - **macOS**: TextEdit's default rich-text format. The agent should edit `.env` via its file tools, not TextEdit. If she already has a `.env.rtf`, delete it; the agent will re-copy `.env.example` → `.env` on next `python3 run.py setup`.
 - **Windows**: Notepad + Explorer's hidden-extension trap. Same fix — delete the `.env.txt` and re-run setup.
 
-**Never ask Roula to edit `.env` in any GUI text editor by hand.**
+**Never ask the user to edit `.env` in any GUI text editor by hand.**
 
 ### `pip install` fails with permission error
 
@@ -132,7 +132,7 @@ python run.py start
 
 yfinance is temporarily unavailable. Not a bug. Click **Refresh** in the sidebar. If still empty after 5 min, Yahoo Finance may be throttling — try again in an hour.
 
-The Overview tab shows an explicit error banner when all tickers fail. If you see that banner, no action is needed other than waiting or checking network connectivity. If Roula is on a corporate VPN (common for GE), try disconnecting and retry.
+The Overview tab shows an explicit error banner when all tickers fail. If you see that banner, no action is needed other than waiting or checking network connectivity. If the user is on a corporate VPN (common for ), try disconnecting and retry.
 
 ---
 
@@ -226,7 +226,7 @@ Some foreign tickers need a suffix: `TSLA` (US) works, but `SHOP.TO` (Shopify on
 ```bash
 git checkout config/tickers.yaml
 # If not a git repo or no changes checked in yet, manually restore to:
-# CRDO, HIMS, BABA, QQQI, IREN (see config/tickers.yaml in the upstream repo)
+# default FX seed: EURUSD=X, USDTRY=X, USDZAR=X, USDBRL=X, USDMXN=X, USDIDR=X, USDPHP=X, USDVND=X (see config/tickers.yaml)
 ```
 
 ---

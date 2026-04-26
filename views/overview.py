@@ -2,7 +2,7 @@
 
 Layout:
 1. **Market context strip** — SPY + QQQ benchmarks (day %, YTD %). Shows
-   Roula whether her watchlist is moving with the market or independently.
+   the user whether their watchlist is moving with the market or independently.
 2. **Watchlist table** — sortable numeric columns, inline 1M sparkline,
    52W position progress bar, volume vs average ratio.
 """
@@ -61,7 +61,7 @@ def _ytd_pct(_orch: DataOrchestrator, ticker: str) -> Optional[float]:
 
 
 def _render_benchmark_strip(orch: DataOrchestrator) -> None:
-    """SPY + QQQ as market context — helps Roula see if watchlist moves
+    """SPY + QQQ as market context — helps the user see if watchlist moves
     are market-wide or idiosyncratic."""
     benchmarks: List[Tuple[str, str]] = [
         (BENCHMARK_SPY, "S&P 500"),
@@ -94,7 +94,7 @@ def render(settings: Settings, orch: DataOrchestrator) -> None:
     )
 
     # ---- Markets section ----
-    # Market context first — so Roula reads "market is up 0.8%" before she reads
+    # Market context first — so the user reads "market is up 0.8%" before she reads
     # any individual ticker and can calibrate her reaction.
     section_label("Markets", icon="🌐", tone="accent")
     with st.spinner("Loading market context..."):
@@ -214,7 +214,7 @@ def render(settings: Settings, orch: DataOrchestrator) -> None:
 
     # ---- Movers section ----
     # Biggest mover callout — surfaces the headline intraday move rather than
-    # making Roula eyeball the table. Uses absolute magnitude of Day %.
+    # making the user eyeball the table. Uses absolute magnitude of Day %.
     movers = [
         (r["Ticker"], r["Day %"], r.get("Vol/Avg"))
         for r in rows

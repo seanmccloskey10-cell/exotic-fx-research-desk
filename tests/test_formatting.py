@@ -17,8 +17,8 @@ def test_escape_single_dollar():
 
 def test_escape_multiple_dollars():
     assert (
-        escape_streamlit_dollars("$IREN (+7.1%) and $CRDO (+3.4%)")
-        == r"\$IREN (+7.1%) and \$CRDO (+3.4%)"
+        escape_streamlit_dollars("\$ZAR (+7.1%) and \$TRY (+3.4%)")
+        == r"\\$ZAR (+7.1%) and \\$TRY (+3.4%)"
     )
 
 
@@ -46,6 +46,6 @@ def test_escape_empty_is_empty():
 def test_escape_real_briefing_snippet():
     # The kind of text that triggered the bug: ticker with $ prefix
     # immediately followed by prose, then another $-ticker.
-    text = "A green session led by $IREN (+7.1%) while $HIMS (-2.5%) lagged."
-    expected = r"A green session led by \$IREN (+7.1%) while \$HIMS (-2.5%) lagged."
+    text = "A green session led by \$ZAR (+7.1%) while \$BRL (-2.5%) lagged."
+    expected = r"A green session led by \\$ZAR (+7.1%) while \\$BRL (-2.5%) lagged."
     assert escape_streamlit_dollars(text) == expected

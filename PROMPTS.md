@@ -23,9 +23,9 @@ Copy any line below, paste it to your Claude Code agent in VS Code, and hit Ente
 ## Managing the watchlist
 
 - *"Add TSLA to my watchlist."*
-- *"Remove BABA from my watchlist."*
+- *"Remove USDPHP from my watchlist."*
 - *"What stocks am I tracking right now?"*
-- *"Replace QQQI with VOO in my watchlist."*
+- *"Replace USDIDR with USDKRW in my watchlist."*
 - *"Reset my watchlist to the original five tickers."*
 
 ## Adding API keys
@@ -73,7 +73,7 @@ Copy any line below, paste it to your Claude Code agent in VS Code, and hit Ente
   — Agent reads TROUBLESHOOTING.md and runs diagnostic commands.
 - *"My Finnhub key isn't being recognized. Help me debug."*
 - *"Why is the news section empty?"*
-- *"The price for CRDO looks wrong — investigate."*
+- *"The price for USDTRY looks wrong — investigate."*
 - *"Port 8501 is already in use. What do I do?"*
 - *"The AI briefing button is greyed out — why?"*
 - *"I get a `.env.txt` error. Fix it for me."*
@@ -98,7 +98,7 @@ Gives you "how has each stock done this year" at a glance, alongside the intrada
 
 ### 3. Personalize the AI Brief's tone (content)
 
-> *"Make my AI Brief more personal. At the top of `config/briefing_prompt.md`, have it open by addressing me as Roula, and in the 'Watchlist snapshot' section have it lead with my 5-stock portfolio before the broader market context (currently the other way round). Keep all the accuracy rules exactly as they are — just change the voice and the ordering. Show me the diff before saving."*
+> *"Make my AI Brief more personal. At the top of `config/briefing_prompt.md`, have it open by addressing me as the user, and in the 'Watchlist snapshot' section have it lead with my 5-stock portfolio before the broader market context (currently the other way round). Keep all the accuracy rules exactly as they are — just change the voice and the ordering. Show me the diff before saving."*
 
 The briefing template is plain markdown with no code — your agent can edit the system prompt and user prompt sections freely. Change applies the next time you click "Generate Briefing" (cached briefings stay cached; regenerate to see the new style).
 
@@ -112,7 +112,7 @@ The briefing template is plain markdown with no code — your agent can edit the
 - *"Add a currency toggle so I can see prices in AED as well as USD."*
 - *"Add Financial Modeling Prep as a data source."* (see APIS.md for the API directory)
 
-## Learning the codebase (for when Roula is curious)
+## Learning the codebase (for when the user is curious)
 
 - *"Walk me through how a price appears on screen — from yfinance to the dashboard."*
 - *"Explain how the data source cascade works, in plain English."*

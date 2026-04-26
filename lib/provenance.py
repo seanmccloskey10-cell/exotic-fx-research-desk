@@ -4,7 +4,7 @@ Two surfaces:
 
 - `render_footer(orch)` — a small caption at the bottom of each view listing
   the active data sources and their roles. Keeps attribution visible wherever
-  Roula is looking.
+  the user is looking.
 - `SOURCE_DESCRIPTIONS` — richer descriptions used by the sidebar to unpack
   each source beyond a green dot.
 """

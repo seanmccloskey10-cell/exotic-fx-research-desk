@@ -89,7 +89,7 @@ class YFinanceSource(DataSource):
         # Normalize dividend yield to a decimal fraction (0.0232 for 2.32%).
         # yfinance 0.2.40+ returns `dividendYield` as PERCENT (e.g. 15.04 for
         # 15.04%, 0.38 for 0.38%). Always /100. `trailingAnnualDividendYield`
-        # is a fraction but returns 0 for some tickers (QQQI) where only the
+        # is a fraction but returns 0 for some tickers (some ETFs and FX pairs) where only the
         # forward-looking field is populated — use it as last resort only.
         # Requires yfinance >= 0.2.40 (pinned in requirements.txt).
         dy_raw = _safe(info.get("dividendYield"), float)

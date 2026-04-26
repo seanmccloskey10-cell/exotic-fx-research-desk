@@ -41,7 +41,7 @@ def test_active_names_empty_when_all_off():
 def test_source_descriptions_cover_all_known_sources():
     """Every source registered in orchestrator.build_default_orchestrator
     should have a descriptive entry — otherwise the sidebar falls back to
-    a bare name and Roula sees an unhelpful green dot.
+    a bare name and the user sees an unhelpful green dot.
     """
     expected = {"yfinance", "finnhub", "alphavantage"}
     assert expected.issubset(SOURCE_DESCRIPTIONS.keys())

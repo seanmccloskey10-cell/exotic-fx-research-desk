@@ -7,7 +7,7 @@ safeguards MUST hold; any change here needs to preserve them:
 1. Budget cap read from ANTHROPIC_MONTHLY_BUDGET_USD (default $5/month).
 2. Rate limit read from ANTHROPIC_MIN_MINUTES_BETWEEN_BRIEFINGS (default 60).
 3. Usage ledger at briefings/.usage.jsonl (append-only; gitignored).
-4. "Current month" is system local time — matches Roula's clock (Dubai).
+4. "Current month" is system local time — matches the user's clock (Dubai).
 5. Hard cap: when month spend >= cap, `is_capped()` returns True; the UI
    MUST disable the button. Only way to re-enable: edit .env manually.
 """
@@ -117,7 +117,7 @@ def append_usage(path: Path, entry: UsageEntry) -> None:
 def month_total(entries: List[UsageEntry], now: Optional[datetime] = None) -> float:
     """Sum of cost_usd for entries in the same (year, month) as `now`.
 
-    Timezone policy: system local time (matches Roula's clock).
+    Timezone policy: system local time (matches the user's clock).
     """
     if now is None:
         now = datetime.now()

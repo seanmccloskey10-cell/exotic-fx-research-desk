@@ -78,7 +78,7 @@ That's it. Paste, send, wait for the report.
 
 - **Live smoke test**: `python3 setup_check.py` step 4 hits yfinance for AAPL and reports OK or FAIL.
 - **Rate limits**: yfinance occasionally rate-limits bursts of requests. If prices show as `—` across the whole watchlist, wait 60 seconds and click Refresh.
-- **Corporate network / VPN**: some networks block the Yahoo endpoint. If she's on a corporate VPN (common for GE employees), try toggling it off and retry.
+- **Corporate network / VPN**: some networks block the Yahoo endpoint. If she's on a corporate VPN (common for corporate users), try toggling it off and retry.
 
 ### 5. `python3 run.py setup` output
 
@@ -108,7 +108,7 @@ This command runs the full `setup_check.py` validation in six steps. The agent s
 
 ## What a healthy system looks like
 
-- **Sidebar**: Title "Roula's Equity Research Desk", NYSE status pill with a colored dot (green = open, amber = pre/after, red = closed), 5 watchlist cards each with ticker + price + colored % change, "Data sources" section with a green dot next to Yahoo Finance.
+- **Sidebar**: Title "FX Research Desk", NYSE status pill with a colored dot (green = open, amber = pre/after, red = closed), 5 watchlist cards each with ticker + price + colored % change, "Data sources" section with a green dot next to Yahoo Finance.
 - **Overview tab**: Markets row (S&P 500 + Nasdaq-100 benchmarks), watchlist table with 5 rows — each row has a real price, a 30-day sparkline trend, a 52W position bar, and a Day% that's not `—`.
 - **No error banners** at the top of any tab.
 

@@ -384,7 +384,7 @@ def render(settings: Settings, orch: DataOrchestrator) -> None:
         "context, and confirmation before acting."
     )
 
-    # Two-column grid so every pattern is visible at once — Roula shouldn't
+    # Two-column grid so every pattern is visible at once — the user shouldn't
     # have to click five times to see what the patterns look like.
     for i in range(0, len(_PATTERNS), 2):
         cols = st.columns(2, gap="large")

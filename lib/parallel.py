@@ -11,10 +11,10 @@ Usage:
     from lib.parallel import fetch_all
 
     results = fetch_all(
-        ["CRDO", "HIMS", "BABA"],
+        ["EURUSD=X", "USDTRY=X", "USDZAR=X"],
         lambda sym: orch.get_quote(sym),
     )
-    # results == {"CRDO": {...}, "HIMS": {...}, "BABA": None}
+    # results == {"EURUSD=X": {...}, "USDTRY=X": {...}, "USDZAR=X": None}
 """
 
 from __future__ import annotations

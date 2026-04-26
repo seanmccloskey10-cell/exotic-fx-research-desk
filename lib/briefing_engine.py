@@ -48,7 +48,7 @@ log = logging.getLogger(__name__)
 MAX_TOKENS = 2048  # cap the output; a briefing shouldn't need more
 NEWS_PER_TICKER = 3  # headlines per ticker in the context payload
 # Anthropic SDK's default timeout is 10 minutes — too long for an interactive
-# UI where Roula is watching a spinner. 90s covers legitimate Sonnet latency
+# UI where the user is watching a spinner. 90s covers legitimate Sonnet latency
 # with comfortable margin, and fails fast on network hangs.
 ANTHROPIC_TIMEOUT_SECONDS = 90.0
 
@@ -76,7 +76,7 @@ class BriefingNoKey(BriefingError):
 def _headline_summary(article: dict) -> dict:
     """Trim an article dict down to briefing-relevant fields.
 
-    URL is included so Claude can cite links in the briefing and Roula can
+    URL is included so Claude can cite links in the briefing and the user can
     click through. Long summaries are truncated so a noisy news item doesn't
     blow out the input-token budget.
     """

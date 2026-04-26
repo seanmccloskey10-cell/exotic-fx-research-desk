@@ -49,7 +49,7 @@ def _sidebar(settings: Settings, orch: DataOrchestrator) -> None:
     st.sidebar.title("FX Research Desk")
     st.sidebar.caption("Local-first. Your data, your machine.")
 
-    # Track the last refresh timestamp across reruns so Roula can see data
+    # Track the last refresh timestamp across reruns so the user can see data
     # staleness at a glance. Updated on refresh-button click.
     if "last_refresh" not in st.session_state:
         st.session_state["last_refresh"] = datetime.now()

@@ -1,7 +1,7 @@
 """Detail tab — per-ticker view with dropdown selector.
 
 Per PRD blocker #1 decision: one Detail tab with a dropdown, not a tab per
-ticker. Keeps the UI stable when Roula adds / removes tickers.
+ticker. Keeps the UI stable when the user adds / removes tickers.
 
 Post Phase 9 visual upgrade: page header rule, rich ticker header block,
 hero strip, and grouped metric sections (Trading activity / Valuation /
@@ -94,7 +94,7 @@ def render(settings: Settings, orch: DataOrchestrator) -> None:
 
     if not settings.tickers:
         st.info(
-            "No tickers configured. Say to your agent: *\"Add CRDO to my watchlist.\"*"
+            "No pairs configured. Say to your agent: *\"Add USDPLN to my watchlist.\"*"
         )
         return
 

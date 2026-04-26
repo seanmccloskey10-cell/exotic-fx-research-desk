@@ -211,7 +211,7 @@ def render(settings: Settings, orch: DataOrchestrator) -> None:
 
     if not settings.tickers:
         st.info(
-            "No tickers configured. Say to your agent: *\"Add CRDO to my watchlist.\"*"
+            "No pairs configured. Say to your agent: *\"Add USDPLN to my watchlist.\"*"
         )
         return
 

@@ -95,24 +95,24 @@ def test_render_section_produces_classed_html():
 
 
 def test_render_section_escapes_dollars_as_html_entity():
-    # KaTeX would otherwise math-italicize the $189.49 / $IREN pairs.
-    html = render_section("Watchlist snapshot", "$IREN at $189.49 led.")
+    # KaTeX would otherwise math-italicize the $189.49 / \$ZAR pairs.
+    html = render_section("Watchlist snapshot", "\$ZAR at $189.49 led.")
     assert "$" not in html  # every literal $ converted to &#36;
-    assert "&#36;IREN" in html
+    assert "&#36;USDZAR" in html
     assert "&#36;189.49" in html
 
 
 def test_render_section_renders_markdown_bold():
-    html = render_section("Risk watch", "**CRDO** looks stretched.")
-    assert "<strong>CRDO</strong>" in html
+    html = render_section("Risk watch", "**EURUSD** looks stretched.")
+    assert "<strong>EURUSD</strong>" in html
 
 
 def test_render_section_renders_tables():
-    md = "| Date | Ticker |\n|---|---|\n| 2026-05-01 | CRDO |"
+    md = "| Date | Ticker |\n|---|---|\n| 2026-05-01 | EURUSD |"
     html = render_section("Earnings calendar", md)
     assert "<table>" in html
     assert "<th>Date</th>" in html
-    assert "<td>CRDO</td>" in html
+    assert "<td>EURUSD</td>" in html
 
 
 # ---------- render_briefing (end-to-end) ----------

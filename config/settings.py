@@ -1,7 +1,7 @@
 """Config loading — tickers, env vars, feature flags.
 
 Timezone decision (per PRD blocker #4): system local time for all date
-boundaries (same-day briefing cache, monthly budget rollover). Roula is in
+boundaries (same-day briefing cache, monthly budget rollover). the user is in
 Dubai (UTC+4); system local matches what her clock shows.
 """
 

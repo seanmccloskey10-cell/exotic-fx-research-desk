@@ -146,7 +146,7 @@ def _generate_and_persist(settings: Settings, orch: DataOrchestrator) -> tuple[s
         return None, f"Anthropic call failed: {e}", None
 
     # Anthropic has already been charged at this point. Any disk failure
-    # below is non-fatal for display but MUST be surfaced clearly so Roula
+    # below is non-fatal for display but MUST be surfaced clearly so the user
     # knows to record the spend manually.
     warnings: list[str] = []
 

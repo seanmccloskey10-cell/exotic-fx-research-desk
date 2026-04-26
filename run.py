@@ -7,7 +7,7 @@ Usage:
     python run.py test      # Run the pytest suite
     python run.py shell     # Print the venv python path (for agent use)
 
-This is the ONE command Roula's agent should use after git clone. It hides:
+This is the ONE command the user's agent should use after git clone. It hides:
 - Virtual environment creation (`python -m venv .venv`)
 - Dependency installation (`pip install -r requirements.txt`)
 - Cross-platform venv Python path (`.venv/Scripts/python.exe` vs `.venv/bin/python`)

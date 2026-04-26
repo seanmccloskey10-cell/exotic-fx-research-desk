@@ -1,7 +1,7 @@
 """Settings tab — READ-ONLY key status + copyable agent prompts.
 
 Per PRD blocker #2 decision: the Settings UI NEVER writes to .env. All
-.env mutations go through Roula's Claude Code agent, not the Streamlit
+.env mutations go through the user's Claude Code agent, not the Streamlit
 app. This is load-bearing — the §5.6 hard-cap guardrail only holds if the
 UI can't raise the cap on its own.
 
@@ -107,7 +107,7 @@ def render(settings: Settings, orch: DataOrchestrator) -> None:
         st.info("No tickers configured.")
     st.caption(
         "To change the watchlist, say to your agent: *\"Add TSLA to my watchlist\"* "
-        "or *\"Remove BABA from my watchlist.\"*"
+        "or *\"Remove USDPHP from my watchlist.\"*"
     )
 
     st.divider()

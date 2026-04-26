@@ -1,6 +1,6 @@
 """First-run environment validator + monthly-spend reporter.
 
-Run this BEFORE the first `streamlit run`. Roula's agent invokes it as part
+Run this BEFORE the first `streamlit run`. the user's agent invokes it as part
 of the setup flow (see README.md). It verifies the environment is sane and
 tells the agent what to do next.
 
