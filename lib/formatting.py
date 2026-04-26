@@ -88,7 +88,7 @@ def delta_color(change: Optional[float]) -> str:
 
 
 def escape_streamlit_dollars(text: Optional[str]) -> str:
-    """Escape `$` so Streamlit's KaTeX doesn't render `$189.49` / `\$ZAR` as math.
+    r"""Escape `$` so Streamlit's KaTeX doesn't render `$189.49` / `\$ZAR` as math.
 
     Streamlit's `st.markdown` (and `st.write`, `st.caption`) interprets `$...$`
     as inline LaTeX math. Briefings, news summaries, and company descriptions

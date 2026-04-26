@@ -117,13 +117,17 @@ def check_yfinance() -> bool:
     try:
         import yfinance as yf
 
-        t = yf.Ticker("AAPL")
-        info = t.info
-        if info and (info.get("regularMarketPrice") or info.get("currentPrice") or info.get("previousClose")):
-            _ok("yfinance returned live data for AAPL")
+        # Use EURUSD=X for the smoke test — it's the canonical default in
+        # this FX variant's watchlist and exercises yfinance's FX path
+        # (which is what the dashboard will actually use).
+        t = yf.Ticker("EURUSD=X")
+        hist = t.history(period="5d")
+        if len(hist) > 0 and "Close" in hist.columns:
+            price = hist["Close"].iloc[-1]
+            _ok(f"yfinance returned live data for EURUSD=X (last close: {price:.6f})")
             return True
         _warn(
-            "yfinance returned no price for AAPL. Could be a transient network "
+            "yfinance returned no price for EURUSD=X. Could be a transient network "
             "issue or Yahoo Finance rate-limiting. Try again in a minute."
         )
         return True
@@ -206,7 +210,7 @@ def check_anthropic_spend() -> None:
 
 def main() -> int:
     print("=" * 60)
-    print(" Equity Research Desk — setup check")
+    print(" FX Research Desk — setup check")
     print("=" * 60)
 
     ok = True
